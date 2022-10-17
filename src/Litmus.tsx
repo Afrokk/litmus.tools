@@ -1,6 +1,8 @@
 const Litmus = (): JSX.Element => {
   return (
-    <>Litmus</>
+    <div>
+      <h1>Litmus.Tools</h1>
+      </div>
   );
 }
 export default Litmus;
