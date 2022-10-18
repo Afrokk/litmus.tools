@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Litmus from './Litmus'
 import reportWebVitals from './reportWebVitals';
+
+import Litmus from './Litmus';
+import BodyContainer from './components/BodyContainer/BodyContainer';
 import './styles/globalStyles.sass';
 
 const root = ReactDOM.createRoot(
@@ -9,7 +11,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Litmus />
+    <BodyContainer>
+      <Litmus />
+    </BodyContainer>
   </React.StrictMode>
 );
 
