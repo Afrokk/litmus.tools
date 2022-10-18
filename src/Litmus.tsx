@@ -1,6 +1,6 @@
 const Litmus = (): JSX.Element => {
   return (
-    <div className="logo">
+    <div>
       <h1>Litmus.Tools</h1>
     </div>
   );

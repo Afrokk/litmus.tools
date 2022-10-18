@@ -1,12 +1,13 @@
 const InputField = (props: any): (JSX.Element) => {
   return (
-    <div className="inputField" >
+    <div className="inputField">
       <label>{props.label}</label>
       <input 
         type={props.type} 
         maxLength={props.maxLength}
         placeholder={props.placeholder}
-        required={props.required}/>
+        required={props.required}
+      />
     </div>
   );
 };
