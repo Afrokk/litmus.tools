@@ -4,5 +4,5 @@ const Litmus = (): JSX.Element => {
       <h1>Litmus.Tools</h1>
     </div>
   );
-}
+};
 export default Litmus;
