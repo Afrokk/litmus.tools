@@ -1,11 +1,11 @@
 import "./InputField.sass";
 
 type InputFieldProps = {
-  label?: string;
-  type?: string;
-  maxLength?: number;
-  placeholder?: string;
-  required?: boolean;
+  label: string;
+  type: string;
+  maxLength: number;
+  placeholder: string;
+  required: boolean;
 };
 
 const InputField = ({
