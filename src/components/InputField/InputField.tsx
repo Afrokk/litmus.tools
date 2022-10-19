@@ -1,21 +1,39 @@
-const InputField = (props: any): (JSX.Element) => {
+import "./InputField.sass";
+
+type InputFieldProps = {
+  label?: string;
+  type?: string;
+  maxLength?: number;
+  placeholder?: string;
+  required?: boolean;
+};
+
+const InputField = ({
+  label,
+  type,
+  maxLength,
+  placeholder,
+  required,
+}: InputFieldProps): JSX.Element => {
   return (
-    <div className="inputField">
-      <label>{props.label}</label>
-      <input 
-        type={props.type} 
-        maxLength={props.maxLength}
-        placeholder={props.placeholder}
-        required={props.required}
+    <div className="InputField">
+      <label>{label}</label>
+      <input
+        type={type}
+        maxLength={maxLength}
+        placeholder={placeholder}
+        required={required}
       />
     </div>
   );
 };
 
 InputField.defaultProps = {
-  type:"text",
-  maxLength:100,
-  placeholder:"",
-  required:false
-}
+  label: "",
+  type: "text",
+  maxLength: 64,
+  placeholder: "",
+  required: false,
+};
+
 export default InputField;
