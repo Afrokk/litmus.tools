@@ -1,7 +1,7 @@
 const Litmus = (): JSX.Element => {
   return (
     <div>
-      <h1>Ark</h1>
+      <h1>Litmus.Tools</h1>
     </div>
   );
 };
