@@ -16,8 +16,8 @@ const DropdownField = ({
   return ( 
     <div className="DropdownField">
         <label>{label}</label>
-        <select id={id}>
-            {options.map(o => <option selected={!!(defaultSelected && o === defaultSelected)}> {o} </option>)}
+        <select id={id} defaultValue={defaultSelected}>
+            {options.map((o, idx) => <option key={idx} value={o}> {o} </option>)}
         </select>
     </div>
     );
