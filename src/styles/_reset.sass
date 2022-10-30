@@ -1,4 +1,4 @@
-@import '_variables'
+@use 'variables' as vars
 
 *, *:before, *:after
     box-sizing: border-box
@@ -8,7 +8,7 @@ html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockq
     padding: 0
     border: 0
     font-size: 100%
-    font-family: $primary-font
+    font-family: vars.$primary-font
     vertical-align: baseline
     text-rendering: optimizeLegibility
     -webkit-font-smoothing: antialiased
