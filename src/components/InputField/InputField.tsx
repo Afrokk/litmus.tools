@@ -1,29 +1,37 @@
 import "./InputField.sass";
+import { useState } from 'react';
 
 type InputFieldProps = {
   label: string;
   type: string;
   maxLength: number;
-  placeholder: string;
   required: boolean;
+  pattern: string;
 };
 
 const InputField = ({
   label,
   type,
   maxLength,
-  placeholder,
   required,
+  pattern
 }: InputFieldProps): JSX.Element => {
+
+  const [value, setValue] = useState('');
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setValue(e.target.value);
+  }
+
   return (
-    <div className="InputField">
-      <label>{label}</label>
-      <input
+    <div className="inputField">
+      <input 
         type={type}
         maxLength={maxLength}
-        placeholder={placeholder}
         required={required}
+        onChange={handleChange}
+        pattern={pattern}
       />
+      <label className={value && 'containsText'}> {label} </label>
     </div>
   );
 };
@@ -32,8 +40,8 @@ InputField.defaultProps = {
   label: "",
   type: "text",
   maxLength: 64,
-  placeholder: "",
   required: false,
+  pattern: ""
 };
 
 export default InputField;
