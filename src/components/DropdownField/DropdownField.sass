@@ -1,8 +1,8 @@
-@import '../../styles/_variables'
+@use '../../styles/variables' as vars
 
 .DropdownField
     > select
-        font-family: $primary-font
+        font-family: vars.$primary-font
         border: none
         padding: 1em
         margin: 0.4em 0 0.4em 0.25em
@@ -10,4 +10,4 @@
         &:focus, &:focus-visible
             outline-style: solid
             outline-width: 0.25em
-            outline-color: $primary-color
+            outline-color: vars.$primary-color
