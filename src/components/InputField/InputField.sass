@@ -8,8 +8,8 @@
     flex-direction: column
     box-sizing: border-box
     border-style: inset
-    padding-top: 0px
     margin: 0 auto
+    padding-top: 0px
 
     label
         position: absolute
@@ -69,9 +69,9 @@
             @include mixins.fadeIn
 
 
-:focus-within label
-    transform: translate(0, 12px) scale(0.82)
-    color: vars.$placeholder-color
+    &:focus-within label
+        transform: translate(0, 12px) scale(0.82)
+        color: vars.$placeholder-color
 
 .input-field-component .in-focus
     transform: translate(0, 12px) scale(0.82)
