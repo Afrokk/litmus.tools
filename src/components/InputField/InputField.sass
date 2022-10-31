@@ -1,30 +1,30 @@
 @use '../../styles/variables' as vars
+@use '../../styles/mixins' as mixins
 
-.inputField 
+.input-field-component
     font-family: vars.$primary-font
     position: relative
     display: flex
     flex-direction: column
     box-sizing: border-box
     border-style: inset
-    padding-top: 80px
-    margin: 0 auto
     padding-top: 0px
+    margin: 0 auto
 
-    label 
+    label
         position: absolute
         padding-top: 0px
         pointer-events: none
         transform: translate(0, 23px) scale(1)
         transform-origin: top left
         transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
-        color: #656565
+        color: vars.$placeholder-color
         font-weight: 700
         letter-spacing: -0.03em
         font-size: 16px
         line-height: 1
         left: 16px
-    
+
     input
         font-family: vars.$primary-font
         font-weight: 700
@@ -42,10 +42,37 @@
         &:focus
             box-shadow: inset 0 0 0 2px vars.$primary-color
 
+    &.error 
+        input
+            position: relative
+            box-shadow: inset 0 0 0 1px vars.$error
+        &::after
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='rgb(200, 0, 0)' class='bi bi-exclamation-circle' viewBox='0 0 16 16'%3E%3Cpath d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/%3E%3Cpath d='M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z'/%3E%3C/svg%3E")
+            position: absolute
+            transition: all 1s
+            padding-right: 20px
+            top: 1rem
+            right: 0
+            @include mixins.fadeIn
+
+    &.success 
+        input
+            position: relative
+            box-shadow: inset 0 0 0 1px vars.$success
+        &::after
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='rgb(18, 210, 0)' class='bi bi-check-circle' viewBox='0 0 16 16'%3E%3Cpath d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/%3E%3Cpath d='M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z'/%3E%3C/svg%3E")
+            position: absolute
+            transition: all 1s
+            padding-right: 20px
+            top: 1rem
+            right: 0
+            @include mixins.fadeIn
+
+
 :focus-within label
     transform: translate(0, 12px) scale(0.82)
-    color: #656565
+    color: vars.$placeholder-color
 
-.inputField .containsText 
+.input-field-component .in-focus
     transform: translate(0, 12px) scale(0.82)
-    color: #656565
+    color: vars.$placeholder-color

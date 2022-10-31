@@ -1,47 +1,60 @@
 import "./InputField.sass";
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 
 type InputFieldProps = {
   label: string;
-  type: string;
-  maxLength: number;
+  fieldType: "POSTCODE" | "AMOUNT" | "PERCENTAGE" | "TEXT";
   required: boolean;
-  pattern: string;
 };
 
 const InputField = ({
   label,
-  type,
-  maxLength,
+  fieldType,
   required,
-  pattern
 }: InputFieldProps): JSX.Element => {
+  const [value, setValue] = useState<string>("");
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const [value, setValue] = useState('');
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  useEffect(() => {
+    setIsValid(validateInput());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
-  }
+    console.log(value);
+  };
+
+  const validateInput = (): boolean =>
+    fieldType === "TEXT" ||
+    !value ||
+    (required && VALIDATOR[fieldType].test(value)) ||
+    (!required && !!value && VALIDATOR[fieldType].test(value));
 
   return (
-    <div className="inputField">
-      <input 
-        type={type}
-        maxLength={maxLength}
-        required={required}
-        onChange={handleChange}
-        pattern={pattern}
-      />
-      <label className={value && 'containsText'}> {label} </label>
+    <div
+      className={`input-field-component ${
+        (!isValid && "error") ||
+        (!value && " ") ||
+        (isValid && fieldType !== "TEXT" && "success")
+      }`}
+    >
+      <input onChange={handleChange} />
+      <label className={value && "in-focus"}>{label}</label>
     </div>
   );
 };
 
 InputField.defaultProps = {
   label: "",
-  type: "text",
-  maxLength: 64,
+  fieldType: "TEXT",
   required: false,
-  pattern: ""
+};
+
+const VALIDATOR: { [key: string]: RegExp } = {
+  POSTCODE: /^\d{5}$/,
+  AMOUNT: /^\d{1,7}$/,
+  PERCENTAGE: /^\d{1,3}%$/,
 };
 
 export default InputField;
