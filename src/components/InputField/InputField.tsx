@@ -32,7 +32,7 @@ const InputField = ({
 
   
   return (
-    <div className={`input-field-component ${(!isValid && "error") || (!value && " ") || (isValid && "success")}`}>
+    <div className={`input-field-component ${(!isValid && "error") || (!value && " ") || (isValid && fieldType!=="TEXT" && "success")}`}>
       <input onChange={handleChange} />
       <label className={value && "in-focus"}>{label}</label>
     </div>
