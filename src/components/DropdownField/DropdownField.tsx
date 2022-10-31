@@ -1,4 +1,5 @@
 import "./DropdownField.sass";
+import { useState } from 'react';
 
 type DropdownFieldProps = {
   label: string;
@@ -13,21 +14,40 @@ const DropdownField = ({
   defaultSelected,
   options,
 }: DropdownFieldProps): JSX.Element => {
-  return ( 
-    <div className="DropdownField">
-        <label>{label}</label>
-        <select id={id} defaultValue={defaultSelected}>
-            {options.map((o, idx) => <option key={idx} value={o}> {o} </option>)}
+  let choices = [];
+  const [value, setValue] = useState('');
+  
+  function handleChange(e: any) {
+    setValue(e.target.value);
+  }
+
+  if (!defaultSelected) {
+    choices.push(<option key={0} value={""} hidden disabled> {""} </option>)
+  }
+  choices = [
+    ...choices,
+    ...options.map((o, idx) => 
+      <option key={idx+1} value={o}> {o} </option>
+    )
+  ]
+  return (
+    <div className="dropdown-field-component">
+        <select 
+          id={id} 
+          defaultValue={defaultSelected} 
+          onChange={handleChange}
+        >
+          {choices}
         </select>
+        <label className={value && 'in-focus'}> {label} </label>
     </div>
     );
 };
-
 DropdownField.defaultProps = {
   label: "",
   id: "",
-  defaultSelected: undefined,
-  options: []
+  defaultSelected: "",
+  options: [],
 };
 
 export default DropdownField;
