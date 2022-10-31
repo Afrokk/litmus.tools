@@ -26,13 +26,19 @@ const InputField = ({
   };
 
   const validateInput = (): boolean =>
-    fieldType === "TEXT" || !value ||
+    fieldType === "TEXT" ||
+    !value ||
     (required && VALIDATOR[fieldType].test(value)) ||
     (!required && !!value && VALIDATOR[fieldType].test(value));
 
-  
   return (
-    <div className={`input-field-component ${(!isValid && "error") || (!value && " ") || (isValid && fieldType!=="TEXT" && "success")}`}>
+    <div
+      className={`input-field-component ${
+        (!isValid && "error") ||
+        (!value && " ") ||
+        (isValid && fieldType !== "TEXT" && "success")
+      }`}
+    >
       <input onChange={handleChange} />
       <label className={value && "in-focus"}>{label}</label>
     </div>

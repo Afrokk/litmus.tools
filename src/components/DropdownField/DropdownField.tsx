@@ -13,21 +13,26 @@ const DropdownField = ({
   defaultSelected,
   options,
 }: DropdownFieldProps): JSX.Element => {
-  return ( 
+  return (
     <div className="DropdownField">
-        <label>{label}</label>
-        <select id={id} defaultValue={defaultSelected}>
-            {options.map((o, idx) => <option key={idx} value={o}> {o} </option>)}
-        </select>
+      <label>{label}</label>
+      <select id={id} defaultValue={defaultSelected}>
+        {options.map((o, idx) => (
+          <option key={idx} value={o}>
+            {" "}
+            {o}{" "}
+          </option>
+        ))}
+      </select>
     </div>
-    );
+  );
 };
 
 DropdownField.defaultProps = {
   label: "",
   id: "",
   defaultSelected: undefined,
-  options: []
+  options: [],
 };
 
 export default DropdownField;
