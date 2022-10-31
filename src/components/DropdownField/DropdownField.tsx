@@ -15,7 +15,7 @@ const DropdownField = ({
   options,
 }: DropdownFieldProps): JSX.Element => {
   let choices = [];
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(defaultSelected || '');
   
   function handleChange(e: any) {
     setValue(e.target.value);
@@ -39,9 +39,9 @@ const DropdownField = ({
         >
           {choices}
         </select>
-        <label className={value && 'in-focus'}> {label} </label>
+        <label className={(value && 'in-focus')}> {label} </label>
     </div>
-    );
+  );
 };
 DropdownField.defaultProps = {
   label: "",

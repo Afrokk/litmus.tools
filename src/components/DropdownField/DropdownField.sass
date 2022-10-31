@@ -24,10 +24,6 @@
         line-height: 1
         left: 16px
 
-    &:focus-within label
-        transform: translate(0, 12px) scale(0.82)
-        color: vars.$placeholder-color
-
     select
         width: 100%
         font-family: vars.$primary-font
@@ -57,6 +53,10 @@
         font-weight: 700
         letter-spacing: -0.03em
         font-size: 16px
+
+    &:focus-within label
+        transform: translate(0, 12px) scale(0.82)
+        color: vars.$placeholder-color
 
 .dropdown-field-component .in-focus
     transform: translate(0, 12px) scale(0.82)
