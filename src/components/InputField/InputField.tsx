@@ -22,14 +22,17 @@ const InputField = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
+    console.log(value);
   };
-  const validateInput = (): boolean =>
-    fieldType.toUpperCase() === "TEXT" ||
-    (required && VALIDATOR[fieldType.toUpperCase()].test(value)) ||
-    (!required && !!value && VALIDATOR[fieldType.toUpperCase()].test(value));
 
+  const validateInput = (): boolean =>
+    fieldType === "TEXT" || !value ||
+    (required && VALIDATOR[fieldType].test(value)) ||
+    (!required && !!value && VALIDATOR[fieldType].test(value));
+
+  
   return (
-    <div className={`input-field-component ${(!isValid && "error") || ""}`}>
+    <div className={`input-field-component ${(!isValid && "error") || (!value && " ") || (isValid && "success")}`}>
       <input onChange={handleChange} />
       <label className={value && "in-focus"}>{label}</label>
     </div>
