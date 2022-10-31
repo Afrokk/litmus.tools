@@ -1,1 +1,2 @@
 *.json linguist-language=typescript
+*.html linguist-language=typescript
