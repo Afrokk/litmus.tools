@@ -17,16 +17,16 @@ const DropdownField = ({
   required,
 }: DropdownFieldProps): JSX.Element => {
   let choices = [];
-  const [value, setValue] = useState(defaultSelected || "");
-  const [click, setClick] = useState(0);
+  const [value, setValue] = useState<string>(defaultSelected || "");
+  const [isTouched, setIsTouched] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
 
-  function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue(e.target.value);
   }
 
-  const countClick = (): void => {
-    setClick((prevValue) => prevValue + 1);
+  const handleBlur = (): void => {
+    setIsTouched(true);
   };
 
   const validateOption = (): boolean => !required || !!value;
@@ -51,14 +51,14 @@ const DropdownField = ({
   return (
     <div
       className={`dropdown-field-component 
-    ${isValid && required ? "success" : click >= 2 && !isValid ? "error" : ""}
-    ${!!defaultSelected && click >= 2 ? "success" : ""}`}
+    ${isValid && required ? "success" : isTouched && !isValid ? "error" : ""}
+    ${!!defaultSelected && isTouched ? "success" : ""}`}
     >
       <select
         id={id}
         defaultValue={defaultSelected}
         onChange={handleChange}
-        onClick={countClick}
+        onBlur={handleBlur}
         required={required}
       >
         {choices}
