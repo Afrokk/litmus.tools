@@ -1,52 +1,14 @@
 @use '../../styles/variables' as vars
+@use '../../styles/mixins' as mixins
 
 .dropdown-field-component
-    font-family: vars.$primary-font
-    position: relative
-    display: flex
-    flex-direction: column
-    box-sizing: border-box
-    border-style: inset
-    margin: 0 auto
-    padding-top: 0px
-
-    label 
-        position: absolute
-        padding-top: 0px
-        pointer-events: none
-        transform: translate(0, 23px) scale(1)
-        transform-origin: top left
-        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
-        color: vars.$placeholder-color
-        font-weight: 700
-        letter-spacing: -0.03em
-        font-size: 16px
-        line-height: 1
-        left: 16px
-
+    @include mixins.componentBaseStyles("select")
+    
     select
+        color: white
         width: 100%
-        font-family: vars.$primary-font
-        font-size: 16px
-        font-weight: 700
         letter-spacing: -0.03em
-        border: none
-        padding: 1em
-        color: vars.$placeholder-color
-        background-color: black
-        color: #FFFFFF
-        height: 64px
-        border-radius: 0
-        border: none
-        padding: 24px 16px 4px 16px
-        line-height: 1
-        outline: none
-        box-shadow: none
-        transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
-        background-color: #000000
-
-        &:focus, &:focus-visible
-            box-shadow: inset 0 0 0 2px vars.$primary-color
+        width: 100%
 
     option
         color: white
@@ -54,9 +16,8 @@
         letter-spacing: -0.03em
         font-size: 16px
 
-    &:focus-within label
-        transform: translate(0, 12px) scale(0.82)
-        color: vars.$placeholder-color
+    @include mixins.errorStyles("select")
+    @include mixins.successStyles("select")
 
 .dropdown-field-component .in-focus
     transform: translate(0, 12px) scale(0.82)

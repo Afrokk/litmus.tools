@@ -22,7 +22,6 @@ const InputField = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
-    console.log(value);
   };
 
   const validateInput = (): boolean =>
