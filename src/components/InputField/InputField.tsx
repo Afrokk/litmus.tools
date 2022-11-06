@@ -31,7 +31,6 @@ const InputField = ({
 
   const handleFocus = (): void => {
     setInFocus(true);
-    console.log(inFocus)
   };
 
   const validateInput = (): boolean =>

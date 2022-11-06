@@ -33,7 +33,6 @@ const DropdownField = ({
 
   const handleFocus = (): void => {
     setInFocus(true);
-    console.log(inFocus)
   };
 
   const validateOption = (): boolean => !required || !!value;
