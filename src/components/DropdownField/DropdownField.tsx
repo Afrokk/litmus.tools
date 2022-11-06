@@ -1,9 +1,5 @@
 import "./DropdownField.sass";
-<<<<<<< HEAD
-import { useState } from 'react';
-=======
 import { useEffect, useState } from "react";
->>>>>>> ec80f9c36729c05a1f09607424e35e35ad30ba4f
 
 type DropdownFieldProps = {
   label: string;
@@ -24,13 +20,20 @@ const DropdownField = ({
   const [value, setValue] = useState<string>(defaultSelected || "");
   const [isTouched, setIsTouched] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
+  const [inFocus, setInFocus] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue(e.target.value);
   }
 
   const handleBlur = (): void => {
+    setInFocus(false);
     setIsTouched(true);
+  };
+
+  const handleFocus = (): void => {
+    setInFocus(true);
+    console.log(inFocus)
   };
 
   const validateOption = (): boolean => !required || !!value;
@@ -55,7 +58,7 @@ const DropdownField = ({
   return (
     <div
       className={`dropdown-field-component 
-    ${isValid && required ? "success" : isTouched && !isValid ? "error" : ""}
+    ${isValid && required && inFocus ? "success" : isTouched && !isValid ? "error" : ""}
     ${!!defaultSelected && isTouched ? "success" : ""}`}
     >
       <select
@@ -63,6 +66,7 @@ const DropdownField = ({
         defaultValue={defaultSelected}
         onChange={handleChange}
         onBlur={handleBlur}
+        onFocus={handleFocus}
         required={required}
       >
         {choices}
