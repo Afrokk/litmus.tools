@@ -14,6 +14,7 @@ const InputField = ({
 }: InputFieldProps): JSX.Element => {
   const [value, setValue] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
+  const [inFocus, setInFocus] = useState<boolean>(false);
 
   useEffect(() => {
     setIsValid(validateInput());
@@ -22,6 +23,14 @@ const InputField = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
+  };
+
+  const handleBlur = (): void => {
+    setInFocus(false);
+  };
+
+  const handleFocus = (): void => {
+    setInFocus(true);
   };
 
   const validateInput = (): boolean =>
@@ -35,10 +44,10 @@ const InputField = ({
       className={`input-field-component ${
         (!isValid && "error") ||
         (!value && " ") ||
-        (isValid && fieldType !== "TEXT" && "success")
+        (isValid && fieldType !== "TEXT" && inFocus && "success")
       }`}
     >
-      <input onChange={handleChange} />
+      <input onChange={handleChange} onBlur={handleBlur} onFocus={handleFocus}/>
       <label className={value && "in-focus"}>{label}</label>
     </div>
   );
