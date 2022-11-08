@@ -27,18 +27,21 @@ Work in progress. Currently using:
 
 ### Development
 * [![React][React.com]][React-url]
-[![TypeScript][TypeScript.com]][TypeScript-url]
-[![SASS][SASS.com]][SASS-url]
-[![JavaScript][JavaScript.com]][JavaScript-url]
-[![Yarn][Yarn.com]][Yarn-url]
+* [![TypeScript][TypeScript.com]][TypeScript-url]
+* [![Yarn][Yarn.com]][Yarn-url]
+* [![SASS][SASS.com]][SASS-url]
+* [![JavaScript][JavaScript.com]][JavaScript-url]
 
-* More to be added.
+_More to be added._
 
 ### Design/Prototyping
-* 
+* [![Figma][Figma.com]][Figma-url]
+* [![Photoshop][Photoshop.com]][Photoshop-url]
 
 ### Collaboration
-* 
+* [![Jira][Jira.com]][Jira-url]
+* [![Git][Git.com]][Git-url]
+* [![GitHub][GitHub.com]][GitHub-url]
 
 ## Design
 Here's a look at the design of the website on different devices.
@@ -70,9 +73,15 @@ Project Link: [https://github.com/Afrokk/litmus.tools](https://github.com/Afrokk
 [SASS-url]: https://sass-lang.com/
 [JavaScript.com]: https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E
 [JavaScript-url]: https://en.wikipedia.org/wiki/JSX_(JavaScript)
-[Yarn.com]: https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E
-[Yarn-url]: https://en.wikipedia.org/wiki/JSX_(JavaScript)
-[Yarn.com]: https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E
+[Yarn.com]: https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white
 [Yarn-url]: https://yarnpkg.com/
-[Yarn.com]: https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E
-[Yarn-url]: https://yarnpkg.com/
+[Figma.com]: https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white
+[Figma-url]: https://www.figma.com/
+[Photoshop.com]: https://img.shields.io/badge/Adobe%20Photoshop-31A8FF?style=for-the-badge&logo=Adobe%20Photoshop&logoColor=black
+[Photoshop-url]: https://www.adobe.com/ca/products/photoshop.html
+[Jira.com]: https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white
+[Jira-url]: https://jira.com/
+[Git.com]: https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white
+[Git-url]: https://git-scm.com/
+[GitHub.com]: https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white
+[GitHub-url]: https://github.com/
