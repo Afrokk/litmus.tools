@@ -1,13 +1,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/Afrokk/litmus.tools">
-    <img src="images/clip.png" alt="Logo" width="315" height="315">
+    <img src="images/clip1.png" alt="Logo" width="415" height="415">
   </a>
 
   <h3 align="center">litmus.tools</h3>
 
   <p align="center">
-    A financial calculator. 
+    Money matters. Track your finances and save. 
     <br />
     <a href="https://github.com/Afrokk/litmus.tools"><strong>Work in Progress. »</strong></a>
     <br />
@@ -47,11 +47,11 @@ Initial design of the app. Simple, minimal and sleek.
 </p>
 
 <p align="center">
-    <img src="images/FigmaMockupPSD1.jpg">
+    <img src="images/FigmaMockupPSD2.jpg">
 </p>
 
 <p align="center">
-    <img src="images/FigmaMockupPSD2.jpg">
+    <img src="images/FigmaMockupPSD1.jpg">
 </p>
 
 
@@ -65,7 +65,6 @@ Some of the things in-plans with this project:
 - [ ] Build bugeting-list.
 
 _More to be added._
-
 _Progress [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
 
 ## Created by
