@@ -1,7 +1,3 @@
-# litmus.tools
-
-This repository is an under construction git involving building a website that helps users make their financial decisions with ease with a simple calculator tool.
-
 <br />
 <div align="center">
   <a href="https://github.com/Afrokk/litmus.tools">
@@ -38,13 +34,15 @@ _More to be added._
 * [![Figma][Figma.com]][Figma-url]
 * [![Photoshop][Photoshop.com]][Photoshop-url]
 
-### Collaboration
+### Collaboration/Version Control
 * [![Jira][Jira.com]][Jira-url]
 * [![Git][Git.com]][Git-url]
 * [![GitHub][GitHub.com]][GitHub-url]
 
 ## Design
 Here's a look at the design of the website on different devices.
+
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FusdFkoM0WQ3EWcH5LUFkaT%2FFinancial-Calculator%3Fnode-id%3D0%253A1" allowfullscreen></iframe>
 
 
 ## Roadmap
