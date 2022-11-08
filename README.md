@@ -16,7 +16,7 @@
 
 ## About The Project
 
-Litmus.tools is an upcoming full-stack web-app that makes it extremely easy and straight forward to calculate your income, taxes based on location, gather insights and plan out your budget - all in one place. All you need to do is enter your income and expenses into the calculator and it will do the rest!
+Litmus.tools is an upcoming full-stack web-app that makes it extremely easy and straight forward to calculate your income, taxes (based on location), gather insights, and plan out your budget - all in one place. All you need to do is enter your income and expenses into the calculator and it will do the rest!
 
 ## Built With
 Work in progress. Currently using:
