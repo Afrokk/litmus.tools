@@ -40,19 +40,33 @@ _More to be added._
 * [![GitHub][GitHub.com]][GitHub-url]
 
 ## Design
-Here's a look at the design of the website on different devices.
+Initial design of the app. Simple, minimal and sleek.
 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FusdFkoM0WQ3EWcH5LUFkaT%2FFinancial-Calculator%3Fnode-id%3D0%253A1" allowfullscreen></iframe>
+<p align="center">
+    <img src="images/FigmaPrototype1.jpg">
+</p>
+
+<p align="center">
+    <img src="images/FigmaMockupPSD1.jpg">
+</p>
+
+<p align="center">
+    <img src="images/FigmaMockupPSD2.jpg">
+</p>
 
 
 ## Roadmap
 Some of the things in-plans with this project:
 
-- [x] Complete Home Page.
-- [x] Complete About Page. 
-- [x] Complete Tickets Page.
-- [x] Complete Venue Page. 
-- [x] Optimize. - PROJECT COMPLETED.
+- [x] Create individual React components from scratch.
+- [x] Handle component-level validation.
+- [x] Test components.
+- [ ] Implement back-end using Python/Flask.
+- [ ] Build bugeting-list.
+
+_More to be added._
+
+_Progress [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
 
 ## Created by
 
