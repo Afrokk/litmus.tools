@@ -1,7 +1,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Afrokk/litmus.tools">
-    <img src="images/clip2.png" alt="Logo" width="415" height="415">
+    <img src="images/clip2.png" alt="Logo" width="315" height="315">
   </a>
 
   <h3 align="center">litmus.tools</h3>
