@@ -46,17 +46,14 @@ const InputField = ({
 
   const formatInput = (): string => {
     if (fieldType === "AMOUNT" && !value.includes("$") && value !== "") {
-      console.log(value);
       return "$" + value;
     } else if (
       fieldType === "PERCENTAGE" &&
       !value.includes("%") &&
       value !== ""
     ) {
-      console.log(value);
       return value + "%";
     } else {
-      console.log(value);
       return value;
     }
   };
