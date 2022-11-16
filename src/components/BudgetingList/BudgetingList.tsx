@@ -71,7 +71,7 @@ const BudgetingList = (): JSX.Element => {
         {fields.map((field, index) => (
           <li key={index} className="list-input-field">
             <InputField label={field} fieldType="TEXT" />
-            <img src={svg} onClick={() => removeField(index)} alt="Remove a field."/>
+            <img className="remove-icon" src={svg} onClick={() => removeField(index)} alt="Remove a field."/>
           </li>
         ))}
         <li>
