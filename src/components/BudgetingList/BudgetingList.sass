@@ -1,0 +1,31 @@
+@use '../../styles/variables' as vars
+@use '../../styles/mixins' as mixins
+
+.budgeting-list-component
+    padding: 36px 33px 36px 33px
+    background-color: #0F0F0F
+    height: auto
+
+    .budgeting-list
+        li
+            padding-top: 10px
+            transition: 0.5s
+            opacity: 100
+        
+        li:first-child
+            padding-top: 0px
+    
+    .new-field
+        @include mixins.fadeIn
+        animation: fadeIn 500ms ease-in-out forwards
+        position: relative
+
+        svg
+            position: absolute
+            width: 42px
+            padding-right: 15px
+            top: 1.7rem
+            right: 0
+            transition: all 0.2s ease
+            &:hover
+                transform: scale(1.1)
