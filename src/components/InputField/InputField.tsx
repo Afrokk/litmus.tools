@@ -5,14 +5,12 @@ type InputFieldProps = {
   label: string;
   fieldType: "POSTCODE" | "AMOUNT" | "PERCENTAGE" | "TEXT";
   required: boolean;
-  formatting: boolean;
 };
 
 const InputField = ({
   label,
   fieldType,
   required,
-  formatting,
 }: InputFieldProps): JSX.Element => {
   const [value, setValue] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -29,7 +27,7 @@ const InputField = ({
 
   const handleBlur = (): void => {
     setInFocus(false);
-    if (formatting) {
+    if (fieldType === "AMOUNT" || fieldType === "PERCENTAGE") {
       setValue(formatInput());
     }
   };
@@ -46,13 +44,13 @@ const InputField = ({
 
   const formatInput = (): string => {
     if (fieldType === "AMOUNT" && !value.includes("$") && value !== "") {
-      return "$" + value;
+      return `$${value}`;
     } else if (
       fieldType === "PERCENTAGE" &&
       !value.includes("%") &&
       value !== ""
     ) {
-      return value + "%";
+      return `${value}%`;
     } else {
       return value;
     }
@@ -81,7 +79,6 @@ InputField.defaultProps = {
   label: "",
   fieldType: "TEXT",
   required: false,
-  formatting: false,
 };
 
 const VALIDATOR: { [key: string]: RegExp } = {
