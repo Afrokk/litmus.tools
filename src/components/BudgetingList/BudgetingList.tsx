@@ -16,6 +16,7 @@ const BudgetingList = (): JSX.Element => {
     setLabel("Enter New Item:");
   };
 
+
   const handleBlur = (): void => {
     setLabel("ADD MORE +");
     setValue("");
