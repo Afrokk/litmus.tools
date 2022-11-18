@@ -2,19 +2,25 @@
 @use '../../styles/mixins' as mixins
 
 .budgeting-list-component
-    padding: 36px 33px 36px 33px
-    margin-bottom: 107px
+    display: flex
+    justify-content: space-evenly
+    padding: 1.2rem 1rem 1.2rem
+    margin-bottom: 6.7rem
     background-color: #0F0F0F
-    height: auto
 
     .budgeting-list
+        width: 100%
+
         li
-            padding-top: 10px
+            padding-bottom: 0.6rem
             transition: 0.5s
             opacity: 100
         
         li:first-child
             padding-top: 0px
+        
+        li:last-child
+            padding-bottom: 0px
     
     .list-input-field
         @include mixins.fadeIn
