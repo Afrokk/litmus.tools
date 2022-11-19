@@ -5,12 +5,16 @@ type InputFieldProps = {
   label: string;
   fieldType: "POSTCODE" | "AMOUNT" | "PERCENTAGE" | "TEXT";
   required: boolean;
+  id: string;
+  data: (value: string, id?: string) => void 
 };
 
 const InputField = ({
   label,
   fieldType,
   required,
+  data,
+  id,
 }: InputFieldProps): JSX.Element => {
   const [value, setValue] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -18,11 +22,26 @@ const InputField = ({
 
   useEffect(() => {
     setIsValid(validateInput());
+
+    /* Passes the user's value to BudgetingList component
+    by calling the data function, passing the current value. */
+
+    if (data === null) {
+      return;
+    }
+    else if (!!value) {
+      data(value);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
+
+    /* Calls handleChildData in BudgetingList 
+    with selected element's ID */
+
+    data(value, e.target.id);
   };
 
   const handleBlur = (): void => {
@@ -65,6 +84,7 @@ const InputField = ({
       }`}
     >
       <input
+        id={id}
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
@@ -79,6 +99,8 @@ InputField.defaultProps = {
   label: "",
   fieldType: "TEXT",
   required: false,
+  data: null,
+  id: null
 };
 
 const VALIDATOR: { [key: string]: RegExp } = {
