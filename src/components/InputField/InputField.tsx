@@ -7,6 +7,7 @@ type InputFieldProps = {
   required: boolean;
   id: string;
   data: (value: string, id?: string) => void 
+  className: string;
 };
 
 const InputField = ({
@@ -15,6 +16,7 @@ const InputField = ({
   required,
   data,
   id,
+  className
 }: InputFieldProps): JSX.Element => {
   const [value, setValue] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -40,7 +42,6 @@ const InputField = ({
 
     /* Calls handleChildData in BudgetingList 
     with selected element's ID */
-
     data(value, e.target.id);
   };
 
@@ -81,7 +82,7 @@ const InputField = ({
         (!isValid && "error") ||
         (!value && " ") ||
         (isValid && fieldType !== "TEXT" && inFocus && "success")
-      }`}
+      } ${className}`}
     >
       <input
         id={id}
@@ -100,7 +101,8 @@ InputField.defaultProps = {
   fieldType: "TEXT",
   required: false,
   data: null,
-  id: null
+  id: null,
+  className: ""
 };
 
 const VALIDATOR: { [key: string]: RegExp } = {

@@ -8,41 +8,40 @@ const BudgetingList = (): JSX.Element => {
   const [childData, setChildData] = useState<string>("");
   const [label, setLabel] = useState<string>("ADD MORE +");
   const [fields, setFields] = useState<Array<string>>([]);
-  const [fieldID, setFieldID] = useState<string>("105");
   const [currField, setcurrField] = useState<string>("");
+  const [isDuplicateField, setIsDuplicateField] = useState<boolean>(false);
   const [budgetingData, setBudgetingData] = useState<Array<any>>([
     { fieldName: "Student Loans", value: 0 },
     { fieldName: "Rent/Mortgage", value: 0 },
     { fieldName: "Internet", value: 0 },
     { fieldName: "Electricity", value: 0 },
     { fieldName: "Health Insurance", value: 0 },
-    { fieldName: "Groceries", value: 0 }
-]);
+    { fieldName: "Groceries", value: 0 },
+  ]);
 
+  /* Sets value for the Add MORE Button */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
 
   // Adds data to the budgetingData array for further calculations.
   const addData = (fieldName: string, value: string, index: string): void => {
-    value = value.replace(/\W|_/g, '');
+    value = value.replace(/\W|_/g, "");
     let fieldValue = parseInt(value);
 
     /* Translating InputField's IDs to the corresponding 
     index in the budgetingData array. */
     let idx = parseInt(index) - 100;
-
     /* For hard-coded InputFields */
     if (fieldName === "" && budgetingData[idx]) {
       budgetingData[idx].value = fieldValue;
       setBudgetingData(budgetingData);
-    }
+    } else {
     /*For user-generated custom InputFields in the list */
-    else {
       budgetingData.push({ fieldName: fieldName, value: fieldValue });
       setBudgetingData(budgetingData);
     }
-  }
+  };
 
   /* Gets data and selected InputField's ID from the InputField element */
   /* ID argument is optional */
@@ -65,26 +64,32 @@ const BudgetingList = (): JSX.Element => {
   useEffect(() => {
     if (!!childData) {
       handleChildData(childData);
+
       addData("", childData, currField);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [childData, value]);
+  }, [childData]);
 
   const handleFocus = (): void => {
-    setLabel("Enter New Item:");
+    setLabel("Enter a New Item:");
   };
 
   const handleBlur = (): void => {
     setLabel("ADD MORE +");
     setValue("");
+    setIsDuplicateField(false);
   };
 
   const addField = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.code === "Enter") {
+      //check if budgetingData already contains the field
+      if (budgetingData.some((item) => item.fieldName === value)) {
+        setIsDuplicateField(true);
+        return;
+      }
       setFields([...fields, value]);
       e.preventDefault();
-      addData(value, childData, fieldID);
-      setFieldID((parseInt(fieldID) + 1).toString());
+      addData(value, "0", currField);
       (e.target as HTMLElement).blur();
     }
   };
@@ -93,6 +98,9 @@ const BudgetingList = (): JSX.Element => {
     let data = [...fields];
     data.splice(index, 1);
     setFields(data);
+    budgetingData.splice(index + 6, 1);
+    setBudgetingData(budgetingData);
+    setValue("");
   };
 
   return (
@@ -153,9 +161,10 @@ const BudgetingList = (): JSX.Element => {
           />
         </li>
         {fields.map((field, index) => (
-          <li key={index} className={`list-input-field `}>
+          <li key={index} className="list-input-field">
             <InputField
-              id={fieldID}
+              className="custom-field"
+              id={`${index + 106}`}
               label={field}
               fieldType="AMOUNT"
               required={true}
@@ -170,7 +179,11 @@ const BudgetingList = (): JSX.Element => {
           </li>
         ))}
         <li>
-          <div className="input-field-component">
+          <div
+            className={`input-field-component ${
+              isDuplicateField ? "error" : ""
+            }`}
+          >
             <input
               onChange={handleChange}
               onFocus={handleFocus}
