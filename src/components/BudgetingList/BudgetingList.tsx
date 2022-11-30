@@ -100,7 +100,6 @@ const BudgetingList = (): JSX.Element => {
     setFields(data);
     budgetingData.splice(index + 6, 1);
     setBudgetingData(budgetingData);
-    setValue("");
   };
 
   return (
@@ -160,8 +159,11 @@ const BudgetingList = (): JSX.Element => {
             data={handleChildData}
           />
         </li>
-        {fields.map((field, index) => (
-          <li key={index} className="list-input-field">
+        {fields.map((field, index) => {
+          //if last index, return this
+          if (index === fields.length - 1) {
+            return (
+            <li key={index} className="list-input-field">
             <InputField
               className="custom-field"
               id={`${index + 106}`}
@@ -176,8 +178,19 @@ const BudgetingList = (): JSX.Element => {
               onClick={() => removeField(index)}
               alt="Remove a field."
             />
-          </li>
-        ))}
+          </li>);
+          }
+          return (<li key={index} className="list-input-field">
+          <InputField
+            className="custom-field"
+            id={`${index + 106}`}
+            label={field}
+            fieldType="AMOUNT"
+            required={true}
+            data={handleChildData}
+          />
+        </li>)
+        })}
         <li>
           <div
             className={`input-field-component ${
