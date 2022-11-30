@@ -6,8 +6,11 @@ type InputFieldProps = {
   fieldType: "POSTCODE" | "AMOUNT" | "PERCENTAGE" | "TEXT";
   required: boolean;
   id: string;
-  data: (value: string, id?: string) => void 
+  data: (value: string, e?: React.ChangeEvent<HTMLInputElement>) => void 
   className: string;
+  passValue: string;
+  name: string;
+  onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const InputField = ({
@@ -16,14 +19,17 @@ const InputField = ({
   required,
   data,
   id,
-  className
+  className,
+  passValue,
+  name,
+  onBlur,
 }: InputFieldProps): JSX.Element => {
   const [value, setValue] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
   const [inFocus, setInFocus] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsValid(validateInput());
+    setIsValid(validateInput(!!passValue ? passValue : value));
 
     /* Passes the user's value to BudgetingList component
     by calling the data function, passing the current value. */
@@ -37,18 +43,24 @@ const InputField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
 
     /* Calls handleChildData in BudgetingList 
     with selected element's ID */
-    data(value, e.target.id);
+    if (data != null) {
+      data(value, e);
+    }
   };
 
-  const handleBlur = (): void => {
+  const handleBlur = (e: any): void => {
     setInFocus(false);
     if (fieldType === "AMOUNT" || fieldType === "PERCENTAGE") {
-      setValue(formatInput());
+      setValue(formatInput(value));
+      if (!!onBlur) {
+        onBlur(e);
+      }
     }
   };
 
@@ -56,13 +68,13 @@ const InputField = ({
     setInFocus(true);
   };
 
-  const validateInput = (): boolean =>
+  const validateInput = (value: string): boolean =>
     fieldType === "TEXT" ||
     !value ||
     (required && VALIDATOR[fieldType].test(value)) ||
     (!required && !!value && VALIDATOR[fieldType].test(value));
 
-  const formatInput = (): string => {
+  const formatInput = (value: string): string => {
     if (fieldType === "AMOUNT" && !value.includes("$") && value !== "") {
       return `$${value}`;
     } else if (
@@ -89,7 +101,8 @@ const InputField = ({
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
-        value={value}
+        value={!!passValue ? passValue : value}
+        name={name}
       />
       <label className={value && "in-focus"}>{label}</label>
     </div>
@@ -102,7 +115,10 @@ InputField.defaultProps = {
   required: false,
   data: null,
   id: null,
-  className: ""
+  className: "",
+  passValue: null,
+  name: null,
+  onBlur: null,
 };
 
 const VALIDATOR: { [key: string]: RegExp } = {

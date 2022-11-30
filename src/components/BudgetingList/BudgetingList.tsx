@@ -7,7 +7,7 @@ const BudgetingList = (): JSX.Element => {
   const [value, setValue] = useState<string>("");
   const [childData, setChildData] = useState<string>("");
   const [label, setLabel] = useState<string>("ADD MORE +");
-  const [fields, setFields] = useState<Array<string>>([]);
+  const [fields, setFields] = useState<Array<any>>([]);
   const [currField, setcurrField] = useState<string>("");
   const [isDuplicateField, setIsDuplicateField] = useState<boolean>(false);
   const [budgetingData, setBudgetingData] = useState<Array<any>>([
@@ -37,30 +37,29 @@ const BudgetingList = (): JSX.Element => {
       budgetingData[idx].value = fieldValue;
       setBudgetingData(budgetingData);
     } else {
-    /*For user-generated custom InputFields in the list */
+      /*For user-generated custom InputFields in the list */
       budgetingData.push({ fieldName: fieldName, value: fieldValue });
       setBudgetingData(budgetingData);
     }
   };
-
-  /* Gets data and selected InputField's ID from the InputField element */
-  /* ID argument is optional */
-  const handleChildData = (data: string, id?: string): void => {
+  
+  const handleChildData = (
+    data: string,
+    e?: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setChildData(data);
 
-    /* If ID is not null, set the current field's ID to 
-    the selected element's ID */
-
-    /* This is used to tell which InputField the input is coming from.
-    The corresponding field in the budgetingData is then updated. */
-
-    //This is ignored if ID is not provided.
-    if (id !== undefined) {
-      setcurrField(id);
+    if (e !== undefined) {
+      setcurrField(e.target.id);
+      if (parseInt(e.target.id) > 105) {
+        let data = [...fields];
+        data[parseInt(e.target.id) - 106].value = e.target.value;
+        setFields(data);
+        setChildData(data[parseInt(e.target.id) - 106].value);
+      }
     }
   };
 
-  // For live recording of the user's input in the BudgetingList array.
   useEffect(() => {
     if (!!childData) {
       handleChildData(childData);
@@ -82,12 +81,17 @@ const BudgetingList = (): JSX.Element => {
 
   const addField = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.code === "Enter") {
-      //check if budgetingData already contains the field
       if (budgetingData.some((item) => item.fieldName === value)) {
         setIsDuplicateField(true);
         return;
       }
-      setFields([...fields, value]);
+      setFields([
+        ...fields,
+        {
+          fieldName: `${value}`,
+          value: "",
+        },
+      ]);
       e.preventDefault();
       addData(value, "0", currField);
       (e.target as HTMLElement).blur();
@@ -100,6 +104,22 @@ const BudgetingList = (): JSX.Element => {
     setFields(data);
     budgetingData.splice(index + 6, 1);
     setBudgetingData(budgetingData);
+  };
+
+  const formatPassValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (parseInt(e.target.id) > 105) {
+      if (
+        !fields[parseInt(e.target.id) - 106].value.includes("$") &&
+        fields[parseInt(e.target.id) - 106].value !== ""
+      ) {
+        let data = [...fields];
+        data[parseInt(e.target.id) - 106].value = `$${
+          data[parseInt(e.target.id) - 106].value
+        }`;
+        setFields(data);
+        setChildData(data[parseInt(e.target.id) - 106].value);
+      }
+    }
   };
 
   return (
@@ -160,36 +180,27 @@ const BudgetingList = (): JSX.Element => {
           />
         </li>
         {fields.map((field, index) => {
-          //if last index, return this
-          if (index === fields.length - 1) {
-            return (
+          return (
             <li key={index} className="list-input-field">
-            <InputField
-              className="custom-field"
-              id={`${index + 106}`}
-              label={field}
-              fieldType="AMOUNT"
-              required={true}
-              data={handleChildData}
-            />
-            <img
-              className="remove-icon"
-              src={svg}
-              onClick={() => removeField(index)}
-              alt="Remove a field."
-            />
-          </li>);
-          }
-          return (<li key={index} className="list-input-field">
-          <InputField
-            className="custom-field"
-            id={`${index + 106}`}
-            label={field}
-            fieldType="AMOUNT"
-            required={true}
-            data={handleChildData}
-          />
-        </li>)
+              <InputField
+                className="custom-field"
+                id={`${index + 106}`}
+                label={field.fieldName}
+                name={field.fieldName}
+                passValue={field.value}
+                fieldType="AMOUNT"
+                required={true}
+                data={handleChildData}
+                onBlur={formatPassValue}
+              />
+              <img
+                className="remove-icon"
+                src={svg}
+                onClick={() => removeField(index)}
+                alt="Remove a field."
+              />
+            </li>
+          );
         })}
         <li>
           <div
