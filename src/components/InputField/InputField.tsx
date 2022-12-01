@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 
 type InputFieldProps = {
   label: string;
-  fieldType: "POSTCODE" | "AMOUNT" | "PERCENTAGE" | "TEXT";
+  fieldType: "POSTCODE" | "AMOUNT" | "PERCENTAGE" | "TEXT" | string;
   required: boolean;
   id: string;
-  data: (value: string, e?: React.ChangeEvent<HTMLInputElement>) => void 
   className: string;
   passValue: string;
   name: string;
+  data: (value: string, e?: React.ChangeEvent<HTMLInputElement>) => void 
   onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -30,10 +30,7 @@ const InputField = ({
 
   useEffect(() => {
     setIsValid(validateInput(!!passValue ? passValue : value));
-
-    /* Passes the user's value to BudgetingList component
-    by calling the data function, passing the current value. */
-
+    
     if (data === null) {
       return;
     }
@@ -47,8 +44,6 @@ const InputField = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
 
-    /* Calls handleChildData in BudgetingList 
-    with selected element's ID */
     if (data != null) {
       data(value, e);
     }
@@ -58,7 +53,7 @@ const InputField = ({
     setInFocus(false);
     if (fieldType === "AMOUNT" || fieldType === "PERCENTAGE") {
       setValue(formatInput(value));
-      if (!!onBlur) {
+      if (onBlur) {
         onBlur(e);
       }
     }

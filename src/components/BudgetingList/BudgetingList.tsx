@@ -3,205 +3,177 @@ import InputField from "../InputField/InputField";
 import svg from "../../assets/x-lg.svg";
 import "./BudgetingList.sass";
 
+type BudgetItem = {
+  fieldName: string;
+  fieldType?: "AMOUNT" | "PERCENTAGE" | "TEXT" | string;
+};
+
+interface UserBudgetItem extends BudgetItem {
+  value: string; 
+}
+
+interface PresetBudgetItems extends BudgetItem {
+  value: number;
+}
+
 const BudgetingList = (): JSX.Element => {
-  const [value, setValue] = useState<string>("");
-  const [childData, setChildData] = useState<string>("");
-  const [label, setLabel] = useState<string>("ADD MORE +");
-  const [fields, setFields] = useState<Array<any>>([]);
-  const [currField, setcurrField] = useState<string>("");
+  const [newFieldValue, setNewFieldValue] = useState<string>("");
+  const [childValue, setChildValue] = useState<string>("");
+  const [newFieldLabel, setNewFieldLabel] = useState<string>("ADD MORE +");
+  const [focusField, setFocusField] = useState<string>("");
   const [isDuplicateField, setIsDuplicateField] = useState<boolean>(false);
-  const [budgetingData, setBudgetingData] = useState<Array<any>>([
-    { fieldName: "Student Loans", value: 0 },
-    { fieldName: "Rent/Mortgage", value: 0 },
-    { fieldName: "Internet", value: 0 },
-    { fieldName: "Electricity", value: 0 },
-    { fieldName: "Health Insurance", value: 0 },
-    { fieldName: "Groceries", value: 0 },
+  const [userBudgetFields, setUserBudgetFields] = useState<Array<UserBudgetItem>>([]);
+  const [budgetingData, setBudgetingData] = useState<Array<PresetBudgetItems>>([
+    { fieldName: "Student Loans", fieldType: "PERCENTAGE", value: 0 },
+    { fieldName: "Rent/Mortgage", fieldType: "AMOUNT", value: 0 },
+    { fieldName: "Internet", fieldType: "AMOUNT", value: 0 },
+    { fieldName: "Electricity", fieldType: "AMOUNT", value: 0 },
+    { fieldName: "Health Insurance", fieldType: "AMOUNT", value: 0 },
+    { fieldName: "Groceries", fieldType: "AMOUNT", value: 0 },
   ]);
+
+  const indexIDOffset = 100;
+  const numPresetFields = budgetingData.length - userBudgetFields.length;
+  const IDIndexOffset = numPresetFields + indexIDOffset;
 
   /* Sets value for the Add MORE Button */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setValue(e.target.value);
+    setNewFieldValue(e.target.value);
   };
 
   // Adds data to the budgetingData array for further calculations.
-  const addData = (fieldName: string, value: string, index: string): void => {
+  const addBudgetingData = (
+    fieldName: string,
+    value: string,
+    index: string
+  ): void => {
     value = value.replace(/\W|_/g, "");
     let fieldValue = parseInt(value);
-
-    /* Translating InputField's IDs to the corresponding 
-    index in the budgetingData array. */
-    let idx = parseInt(index) - 100;
-    /* For hard-coded InputFields */
-    if (fieldName === "" && budgetingData[idx]) {
-      budgetingData[idx].value = fieldValue;
-      setBudgetingData(budgetingData);
-    } else {
-      /*For user-generated custom InputFields in the list */
-      budgetingData.push({ fieldName: fieldName, value: fieldValue });
-      setBudgetingData(budgetingData);
-    }
+    fieldName === "" && budgetingData[parseInt(index) - indexIDOffset]
+      ? (budgetingData[parseInt(index) - indexIDOffset].value = fieldValue) &&
+        setBudgetingData([...budgetingData])
+      : budgetingData.push({
+          fieldName: fieldName,
+          fieldType: "AMOUNT",
+          value: fieldValue,
+        }) && setBudgetingData([...budgetingData]);
   };
-  
-  const handleChildData = (
-    data: string,
+
+  const handleChildValue = (
+    childValue: string,
     e?: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setChildData(data);
+    setChildValue(childValue);
 
-    if (e !== undefined) {
-      setcurrField(e.target.id);
-      if (parseInt(e.target.id) > 105) {
-        let data = [...fields];
-        data[parseInt(e.target.id) - 106].value = e.target.value;
-        setFields(data);
-        setChildData(data[parseInt(e.target.id) - 106].value);
-      }
+    if (!e) return;
+    let id = e.target.id;
+    setFocusField(id);
+    if (parseInt(id) >= IDIndexOffset) {
+      userBudgetFields[parseInt(id) - IDIndexOffset].value = e.target.value;
+      setUserBudgetFields([...userBudgetFields]);
+      setChildValue(userBudgetFields[parseInt(id) - IDIndexOffset].value);
     }
   };
 
   useEffect(() => {
-    if (!!childData) {
-      handleChildData(childData);
-
-      addData("", childData, currField);
+    if (childValue) {
+      handleChildValue(childValue);
+      addBudgetingData("", childValue, focusField);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [childData]);
+  }, [childValue]);
 
   const handleFocus = (): void => {
-    setLabel("Enter a New Item:");
+    setNewFieldLabel("Enter a New Item:");
   };
 
   const handleBlur = (): void => {
-    setLabel("ADD MORE +");
-    setValue("");
+    setNewFieldLabel("ADD MORE +");
+    setNewFieldValue("");
     setIsDuplicateField(false);
   };
 
   const addField = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code === "Enter") {
-      if (budgetingData.some((item) => item.fieldName === value)) {
-        setIsDuplicateField(true);
-        return;
-      }
-      setFields([
-        ...fields,
-        {
-          fieldName: `${value}`,
-          value: "",
-        },
-      ]);
-      e.preventDefault();
-      addData(value, "0", currField);
-      (e.target as HTMLElement).blur();
+    if (e.code !== "Enter") {return;}
+    if (budgetingData.some((item) => item.fieldName === newFieldValue)) {
+      setIsDuplicateField(true);
+      return;
     }
+    setUserBudgetFields([
+      ...userBudgetFields,
+      {
+        fieldName: `${newFieldValue}`,
+        value: "",
+      },
+    ]);
+    e.preventDefault();
+    addBudgetingData(newFieldValue, "0", focusField);
+    (e.target as HTMLElement).blur();
   };
 
   const removeField = (index: number): void => {
-    let data = [...fields];
-    data.splice(index, 1);
-    setFields(data);
-    budgetingData.splice(index + 6, 1);
-    setBudgetingData(budgetingData);
+    userBudgetFields.splice(index, 1);
+    setUserBudgetFields([...userBudgetFields]);
+    budgetingData.splice(index + numPresetFields, 1);
+    setBudgetingData([...budgetingData]);
   };
 
   const formatPassValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (parseInt(e.target.id) > 105) {
-      if (
-        !fields[parseInt(e.target.id) - 106].value.includes("$") &&
-        fields[parseInt(e.target.id) - 106].value !== ""
-      ) {
-        let data = [...fields];
-        data[parseInt(e.target.id) - 106].value = `$${
-          data[parseInt(e.target.id) - 106].value
-        }`;
-        setFields(data);
-        setChildData(data[parseInt(e.target.id) - 106].value);
-      }
+    if (parseInt(e.target.id) < IDIndexOffset) {return;}
+    const focusFieldIdx = parseInt(e.target.id) - IDIndexOffset;
+    if (
+      !userBudgetFields[focusFieldIdx].value.includes("$") &&
+      userBudgetFields[focusFieldIdx].value !== ""
+    ) {
+      userBudgetFields[focusFieldIdx].value = `$${
+        userBudgetFields[focusFieldIdx].value
+      }`;
+      setUserBudgetFields([...userBudgetFields]);
+      setChildValue(userBudgetFields[focusFieldIdx].value);
     }
   };
-
+  
   return (
     <div className="budgeting-list-component">
       <ul className="budgeting-list">
-        <li>
-          <InputField
-            id="100"
-            label="Student Loans (%)"
-            fieldType="PERCENTAGE"
-            required={true}
-            data={handleChildData}
-          />
-        </li>
-        <li>
-          <InputField
-            id="101"
-            label="Rent/Mortgage"
-            fieldType="AMOUNT"
-            required={true}
-            data={handleChildData}
-          />
-        </li>
-        <li>
-          <InputField
-            id="102"
-            label="Internet"
-            fieldType="AMOUNT"
-            required={true}
-            data={handleChildData}
-          />
-        </li>
-        <li>
-          <InputField
-            id="103"
-            label="Electricity"
-            fieldType="AMOUNT"
-            required={true}
-            data={handleChildData}
-          />
-        </li>
-        <li>
-          <InputField
-            id="104"
-            label="Health Insurance"
-            fieldType="AMOUNT"
-            required={true}
-            data={handleChildData}
-          />
-        </li>
-        <li>
-          <InputField
-            id="105"
-            label="Groceries"
-            fieldType="AMOUNT"
-            required={true}
-            data={handleChildData}
-          />
-        </li>
-        {fields.map((field, index) => {
-          return (
-            <li key={index} className="list-input-field">
-              <InputField
-                className="custom-field"
-                id={`${index + 106}`}
-                label={field.fieldName}
-                name={field.fieldName}
-                passValue={field.value}
-                fieldType="AMOUNT"
-                required={true}
-                data={handleChildData}
-                onBlur={formatPassValue}
-              />
-              <img
-                className="remove-icon"
-                src={svg}
-                onClick={() => removeField(index)}
-                alt="Remove a field."
-              />
-            </li>
-          );
+        {budgetingData.map((item, index) => {
+          if (index < numPresetFields) {
+            return (
+              <li key={index}>
+                <InputField
+                  id={(index + indexIDOffset).toString()}
+                  label={item.fieldName}
+                  fieldType={item.fieldType}
+                  required={true}
+                  data={handleChildValue}
+                />
+              </li>
+            );
+          } else {
+            return null;
+          }
         })}
+        {userBudgetFields.map((field, index) => (
+          <li key={index} className="list-input-field">
+            <InputField
+              className="custom-field"
+              id={`${index + (numPresetFields + indexIDOffset)}`}
+              label={field.fieldName}
+              name={field.fieldName}
+              passValue={field.value}
+              fieldType="AMOUNT"
+              required={true}
+              data={handleChildValue}
+              onBlur={formatPassValue}
+            />
+            <img
+              className="remove-icon"
+              src={svg}
+              onClick={() => removeField(index)}
+              alt="Remove a field."
+            />
+          </li>
+        ))}
         <li>
           <div
             className={`input-field-component ${
@@ -213,9 +185,11 @@ const BudgetingList = (): JSX.Element => {
               onFocus={handleFocus}
               onBlur={handleBlur}
               onKeyUp={addField}
-              value={value}
+              value={newFieldValue}
             />
-            <label className={value && "in-focus"}>{label}</label>
+            <label className={newFieldValue && "in-focus"}>
+              {newFieldLabel}
+            </label>
           </div>
         </li>
       </ul>
