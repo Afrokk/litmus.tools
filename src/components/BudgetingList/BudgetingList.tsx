@@ -84,7 +84,7 @@ const BudgetingList = (): JSX.Element => {
   }, [childValue]);
 
   const handleFocus = (): void => {
-    setNewFieldLabel("Enter a New Item:");
+    setNewFieldLabel("Type New Field and Press Enter:");
   };
 
   const handleBlur = (): void => {
@@ -95,7 +95,7 @@ const BudgetingList = (): JSX.Element => {
 
   const addField = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.code !== "Enter") {return;}
-    if (budgetingData.some((item) => item.fieldName === newFieldValue)) {
+    if (budgetingData.some((item) => item.fieldName === newFieldValue) || newFieldValue === "") {
       setIsDuplicateField(true);
       return;
     }
