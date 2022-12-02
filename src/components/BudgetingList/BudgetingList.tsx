@@ -24,7 +24,7 @@ const BudgetingList = (): JSX.Element => {
   const [isDuplicateField, setIsDuplicateField] = useState<boolean>(false);
   const [userBudgetFields, setUserBudgetFields] = useState<Array<UserBudgetItems>>([]);
   const [budgetingData, setBudgetingData] = useState<Array<PresetBudgetItems>>([
-    { fieldName: "Student Loans", fieldType: "PERCENTAGE", value: 0 },
+    { fieldName: "Student Loans (%)", fieldType: "PERCENTAGE", value: 0 },
     { fieldName: "Rent/Mortgage", fieldType: "AMOUNT", value: 0 },
     { fieldName: "Internet", fieldType: "AMOUNT", value: 0 },
     { fieldName: "Electricity", fieldType: "AMOUNT", value: 0 },
