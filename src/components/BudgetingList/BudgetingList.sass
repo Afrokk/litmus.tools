@@ -1,0 +1,48 @@
+@use '../../styles/variables' as vars
+@use '../../styles/mixins' as mixins
+
+.budgeting-list-component
+    display: flex
+    justify-content: space-evenly
+    padding: 1.2rem 1rem 1.2rem
+    margin-bottom: 6.7rem
+    background-color: #0F0F0F
+
+    .budgeting-list
+        width: 100%
+
+        li
+            padding-bottom: 0.6rem
+            transition: 0.5s
+            opacity: 100
+        
+        li:first-child
+            padding-top: 0px
+        
+        li:last-child
+            padding-bottom: 0px
+    
+    .list-input-field
+        @include mixins.fadeIn
+        animation: fadeIn 500ms ease-in-out forwards
+        position: relative
+
+        .remove-icon
+            position: absolute
+            width: 44px
+            padding-right: 15px
+            top: 1.05rem
+            right: 0.5rem
+            transition: all 0.2s ease
+            &:hover
+                transform: scale(1.1)
+
+.custom-field
+    &.error
+        &::after
+            top: 1.2rem
+            right: 2.1rem
+    &.success
+        &::after
+            top: 1.2rem
+            right: 2.1rem

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 
-import Litmus from "./Litmus";
+import Litmus from "./pages/Litmus/Litmus";
 import BodyContainer from "./components/BodyContainer/BodyContainer";
 import "./styles/globalStyles.sass";
 
