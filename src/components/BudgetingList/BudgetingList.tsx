@@ -8,7 +8,7 @@ type BudgetItem = {
   fieldType?: "AMOUNT" | "PERCENTAGE" | "TEXT" | string;
 };
 
-interface UserBudgetItem extends BudgetItem {
+interface UserBudgetItems extends BudgetItem {
   value: string; 
 }
 
@@ -22,7 +22,7 @@ const BudgetingList = (): JSX.Element => {
   const [newFieldLabel, setNewFieldLabel] = useState<string>("ADD MORE +");
   const [focusField, setFocusField] = useState<string>("");
   const [isDuplicateField, setIsDuplicateField] = useState<boolean>(false);
-  const [userBudgetFields, setUserBudgetFields] = useState<Array<UserBudgetItem>>([]);
+  const [userBudgetFields, setUserBudgetFields] = useState<Array<UserBudgetItems>>([]);
   const [budgetingData, setBudgetingData] = useState<Array<PresetBudgetItems>>([
     { fieldName: "Student Loans", fieldType: "PERCENTAGE", value: 0 },
     { fieldName: "Rent/Mortgage", fieldType: "AMOUNT", value: 0 },

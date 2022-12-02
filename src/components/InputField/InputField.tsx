@@ -29,7 +29,7 @@ const InputField = ({
   const [inFocus, setInFocus] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsValid(validateInput(!!passValue ? passValue : value));
+    setIsValid(validateInput(passValue ? passValue : value));
     
     if (data === null) {
       return;
@@ -96,7 +96,7 @@ const InputField = ({
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
-        value={!!passValue ? passValue : value}
+        value={passValue ? passValue : value}
         name={name}
       />
       <label className={value && "in-focus"}>{label}</label>
