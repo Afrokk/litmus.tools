@@ -60,9 +60,11 @@ Some of the things in-plans with this project:
 
 - [x] Create individual React components from scratch.
 - [x] Handle component-level validation.
-- [x] Test components.
+- [x] Test basic components.
+- [x] Build bugeting-list component.
+- [ ] Build Primary Details Component. 
+- [ ] Build Calculations/Insights Component.
 - [ ] Implement back-end using Python/Flask.
-- [ ] Build bugeting-list.
 
 _More to be added._
 _Progress [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
