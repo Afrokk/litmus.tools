@@ -5,7 +5,7 @@ import "./BudgetingList.sass";
 
 type BudgetItem = {
   fieldName: string;
-  fieldType?: "AMOUNT" | "PERCENTAGE" | "TEXT" | string;
+  fieldType?: string;
 };
 
 interface UserBudgetItems extends BudgetItem {
