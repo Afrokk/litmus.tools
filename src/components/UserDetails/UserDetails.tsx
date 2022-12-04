@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputField from "../InputField/InputField";
 import DropdownField from "../DropdownField/DropdownField";
 import "./UserDetails.sass";
@@ -10,14 +10,27 @@ type UserData = {
   "Relationship Status": "Single" | "Married" | undefined;
 };
 
-const UserDetails = () => {
+type UserDetailsProps = {
+  exportData: (data: UserData) => void
+};
+
+const UserDetails = ({
+  exportData,
+}: UserDetailsProps) => {
   const [userDetailsData, setUserDetailsData] = useState<UserData>({
     "Postal Code": "",
     "Annual Income": 0,
     Bonus: 0,
     "Relationship Status": undefined,
   });
+
   const nonNumericFields = ["Postal Code", "Relationship Status"];
+
+  useEffect(() => {
+    if (exportData) {
+      exportData(userDetailsData);
+    }
+  });
 
   const handleInputChildValue = (
     childValue: string,
@@ -78,6 +91,10 @@ const UserDetails = () => {
       />
     </div>
   );
+};
+
+UserDetails.defaultProps = {
+  exportData: null
 };
 
 export default UserDetails;
