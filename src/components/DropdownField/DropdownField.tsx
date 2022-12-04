@@ -4,17 +4,21 @@ import { useEffect, useState } from "react";
 type DropdownFieldProps = {
   label: string;
   id: string;
+  name: string;
   defaultSelected: string;
   options: string[];
   required: boolean;
+  data: (value: string, e?: React.ChangeEvent<HTMLSelectElement>) => void 
 };
 
 const DropdownField = ({
   label,
   id,
+  name,
   defaultSelected,
   options,
   required,
+  data,
 }: DropdownFieldProps): JSX.Element => {
   let choices = [];
   const [value, setValue] = useState<string>(defaultSelected || "");
@@ -24,6 +28,9 @@ const DropdownField = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue(e.target.value);
+    if (data) {
+      data(value, e);
+    }
   }
 
   const handleBlur = (): void => {
@@ -62,6 +69,7 @@ const DropdownField = ({
     >
       <select
         id={id}
+        name={name}
         defaultValue={defaultSelected}
         onChange={handleChange}
         onBlur={handleBlur}
@@ -77,9 +85,11 @@ const DropdownField = ({
 DropdownField.defaultProps = {
   label: "",
   id: "",
+  name: "",
   defaultSelected: "",
   options: [],
   required: false,
+  data: null
 };
 
 export default DropdownField;

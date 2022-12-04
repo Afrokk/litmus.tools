@@ -1,6 +1,5 @@
 import BudgetingList from "../../components/BudgetingList/BudgetingList";
-import DropdownField from "../../components/DropdownField/DropdownField";
-import InputField from "../../components/InputField/InputField";
+import UserDetails from "../../components/UserDetails/UserDetails";
 import "./Litmus.sass";
 
 const Litmus = (): JSX.Element => {
@@ -11,14 +10,7 @@ const Litmus = (): JSX.Element => {
       </h1>
 
       <div className="primary-details-container">
-        <InputField fieldType="POSTCODE" required={true} label="Postal Code"/>
-        <InputField fieldType="AMOUNT" required={true} label="Yearly Income"/>
-        <InputField fieldType="AMOUNT" required={true} label="Bonus"/>
-        <DropdownField
-          label="Single/Married"
-          options={["Single", "Married"]}
-          required={true}
-        />
+        <UserDetails />
       </div>
 
       <div className="secondary-details-container">
@@ -29,7 +21,7 @@ const Litmus = (): JSX.Element => {
           Quidem quam voluptate aliquam maiores minus, nobis eos aperiam illum optio quisquam amet, modi dolor nulla labore autem cum omnis, ut quae voluptates quis sunt! Possimus repudiandae obcaecati cupiditate minima?
           Perspiciatis, sed quas. Culpa incidunt nobis quidem inventore possimus perferendis ex hic corrupti labore facere alias dolor eligendi vel illum ab maiores nostrum assumenda sequi error, facilis nisi? Quaerat, aspernatur!</p>
         </div>
-        <div id="list">
+        <div id="budgeting-list">
           <BudgetingList />
         </div>
       </div>
