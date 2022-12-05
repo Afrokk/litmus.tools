@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
 import InputField from "../InputField/InputField";
 import DropdownField from "../DropdownField/DropdownField";
+import { UserData } from "./UserDetails.dto";
 import "./UserDetails.sass";
-
-type UserData = {
-  "Postal Code": string;
-  "Annual Income": number;
-  Bonus: number;
-  "Relationship Status": "Single" | "Married" | undefined;
-};
 
 type UserDetailsProps = {
   exportData: (data: UserData) => void

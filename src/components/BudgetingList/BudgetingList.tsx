@@ -2,19 +2,7 @@ import { useEffect, useState } from "react";
 import InputField from "../InputField/InputField";
 import svg from "../../assets/x-lg.svg";
 import "./BudgetingList.sass";
-
-type BudgetItem = {
-  fieldName: string;
-  fieldType?: string;
-};
-
-interface UserBudgetItems extends BudgetItem {
-  value: string; 
-}
-
-interface PresetBudgetItems extends BudgetItem {
-  value: number;
-}
+import { UserBudgetItems, PresetBudgetItems } from "./BudgetingList.dto";
 
 type BudgetingListProps = {
   exportData: (data: any) => void

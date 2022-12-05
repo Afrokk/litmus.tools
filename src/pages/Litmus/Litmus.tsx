@@ -1,20 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BudgetingList from "../../components/BudgetingList/BudgetingList";
 import UserDetails from "../../components/UserDetails/UserDetails";
+import { UserData } from "../../components/UserDetails/UserDetails.dto";
+import { PresetBudgetItems } from "../../components/BudgetingList/BudgetingList.dto";
 import "./Litmus.sass";
 
-type UserData = {
-  "Postal Code": string;
-  "Annual Income": number;
-  Bonus: number;
-  "Relationship Status": "Single" | "Married" | undefined;
-};
-
-type BudgetingData = {
-  fieldName: string;
-  fieldType: string;
-  value: number;
-};
+type BudgetingData = Array<PresetBudgetItems>;
 
 //WIP
 const Litmus = (): JSX.Element => {
@@ -24,14 +15,14 @@ const Litmus = (): JSX.Element => {
     Bonus: 0,
     "Relationship Status": undefined,
   });
-  const [budgetingData, setBudgetingData] = useState<Array<BudgetingData>>([]);
+  const [budgetingData, setBudgetingData] = useState<BudgetingData>();
 
   const handleUserData = (data: UserData): void => {
     setUserDetailsData(data);
   };
 
   const handleBudgetingData = (data: BudgetingData): void => {
-    setBudgetingData([data]);
+    setBudgetingData([...data]);
   };
 
   return (
