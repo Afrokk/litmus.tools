@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import BudgetingList from "../../components/BudgetingList/BudgetingList";
 import UserDetails from "../../components/UserDetails/UserDetails";
 import "./Litmus.sass";
@@ -17,15 +18,21 @@ type BudgetingData = {
 
 //WIP
 const Litmus = (): JSX.Element => {
+  const [userDetailsData, setUserDetailsData] = useState<UserData>({
+    "Postal Code": "",
+    "Annual Income": 0,
+    Bonus: 0,
+    "Relationship Status": undefined,
+  });
+  const [budgetingData, setBudgetingData] = useState<Array<BudgetingData>>([]);
+
   const handleUserData = (data: UserData): void => {
-    const userData = data;
-    console.log(userData);
-  }
+    setUserDetailsData(data);
+  };
 
   const handleBudgetingData = (data: BudgetingData): void => {
-    const budgetingData = data;
-    console.log(budgetingData);
-  }
+    setBudgetingData([data]);
+  };
 
   return (
     <>
