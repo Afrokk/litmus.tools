@@ -62,7 +62,7 @@ Some of the things in-plans with this project:
 - [x] Handle component-level validation.
 - [x] Test basic components.
 - [x] Build bugeting-list component.
-- [ ] Build Primary Details Component. 
+- [x] Build Primary Details Component. 
 - [ ] Build Calculations/Insights Component.
 - [ ] Implement back-end using Python/Flask.
 
