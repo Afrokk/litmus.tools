@@ -9,7 +9,7 @@ type InputFieldProps = {
   className: string;
   passValue: string;
   name: string;
-  data: (value: string, e?: React.ChangeEvent<HTMLInputElement>) => void 
+  data: (value: string, e?: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 

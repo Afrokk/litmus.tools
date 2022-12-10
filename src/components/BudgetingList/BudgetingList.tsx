@@ -2,21 +2,15 @@ import { useEffect, useState } from "react";
 import InputField from "../InputField/InputField";
 import svg from "../../assets/x-lg.svg";
 import "./BudgetingList.sass";
+import { UserBudgetItems, PresetBudgetItems } from "./BudgetingList.dto";
 
-type BudgetItem = {
-  fieldName: string;
-  fieldType?: string;
+type BudgetingListProps = {
+  exportData: (data: any) => void
 };
 
-interface UserBudgetItems extends BudgetItem {
-  value: string; 
-}
-
-interface PresetBudgetItems extends BudgetItem {
-  value: number;
-}
-
-const BudgetingList = (): JSX.Element => {
+const BudgetingList = ({
+  exportData,
+}: BudgetingListProps): JSX.Element => {
   const [newFieldValue, setNewFieldValue] = useState<string>("");
   const [childValue, setChildValue] = useState<string>("");
   const [newFieldLabel, setNewFieldLabel] = useState<string>("ADD MORE +");
@@ -82,6 +76,11 @@ const BudgetingList = (): JSX.Element => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [childValue]);
+
+  useEffect(() => {
+    exportData(budgetingData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [budgetingData]);
 
   const handleFocus = (): void => {
     setNewFieldLabel("Type New Field and Press Enter:");
@@ -196,5 +195,9 @@ const BudgetingList = (): JSX.Element => {
     </div>
   );
 };
+
+BudgetingList.defaultProps = {
+  exportData: null
+} 
 
 export default BudgetingList;
