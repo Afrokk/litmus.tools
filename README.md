@@ -63,8 +63,8 @@ Some of the things in-plans with this project:
 - [x] Test basic components.
 - [x] Build bugeting-list component.
 - [x] Build Primary Details Component. 
-- [ ] Build Calculations/Insights Component.
-- [ ] Implement back-end using Python/Flask.
+- [ ] Build Descriptions inside Litmus.tsx, as per Figma spec.
+- [ ] Implement back-end using Python/Flas (to get Tax rates according to states).
 
 _More to be added._
 _Progress [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
