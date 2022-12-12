@@ -36,24 +36,15 @@ const Litmus = (): JSX.Element => {
       <div className="secondary-details-container">
         <div id="results">
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere
-            sint fugit facilis repellat, mollitia cum modi, unde quas ullam quos
-            cumque, nulla illum accusamus minus rerum minima saepe fuga tempora.
-            Sequi, delectus porro odit deserunt tempore expedita tempora.
-            Explicabo obcaecati optio minus. Cupiditate odio illum facilis, enim
-            voluptate saepe modi itaque pariatur possimus, ut mollitia iure
-            dolore tenetur libero qui? Laudantium minus quae cum, dolorem,
-            repudiandae esse quibusdam, ab maxime explicabo temporibus ad sequi
-            ipsam magni alias provident aliquid! Rerum blanditiis, similique
-            nihil possimus error at illo sapiente harum iste. Quidem quam
-            voluptate aliquam maiores minus, nobis eos aperiam illum optio
-            quisquam amet, modi dolor nulla labore autem cum omnis, ut quae
-            voluptates quis sunt! Possimus repudiandae obcaecati cupiditate
-            minima? Perspiciatis, sed quas. Culpa incidunt nobis quidem
-            inventore possimus perferendis ex hic corrupti labore facere alias
-            dolor eligendi vel illum ab maiores nostrum assumenda sequi error,
-            facilis nisi? Quaerat, aspernatur!
+            Some weak ass quote into to captivate the user. Only add the monthly charges of items you can't live without. <br /><br /> <br />
+            <strong>Note:</strong> This tool may not be super accurate.
           </p>
+          <div className="spaced-text result-headings">
+            <h2>Gross</h2>
+            <h2>Net</h2>
+            <h2>Taxes</h2>
+            <h3>(Gross - Net)</h3>
+          </div>
         </div>
         <div id="budgeting-list">
           <BudgetingList exportData={handleBudgetingData} />
