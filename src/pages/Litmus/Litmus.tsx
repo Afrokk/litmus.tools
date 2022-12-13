@@ -2,10 +2,10 @@ import { useState } from "react";
 import BudgetingList from "../../components/BudgetingList/BudgetingList";
 import UserDetails from "../../components/UserDetails/UserDetails";
 import { UserData } from "../../components/UserDetails/UserDetails.dto";
-import { PresetBudgetItems } from "../../components/BudgetingList/BudgetingList.dto";
+import { BudgetItem } from "../../components/BudgetingList/BudgetingList.dto";
 import "./Litmus.sass";
 
-type BudgetingData = Array<PresetBudgetItems>;
+type BudgetingData = Array<BudgetItem>;
 
 const Litmus = (): JSX.Element => {
   const [userDetailsData, setUserDetailsData] = useState<UserData>({

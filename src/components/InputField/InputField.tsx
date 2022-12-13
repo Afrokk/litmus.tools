@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 
 type InputFieldProps = {
   label: string;
-  fieldType: "POSTCODE" | "AMOUNT" | "PERCENTAGE" | "TEXT" | string;
+  fieldType:
+    | "POSTCODE"
+    | "AMOUNT"
+    | "PERCENTAGE"
+    | "TEXT"
+    | "AMOUNTorPERCENTAGE"
+    | string;
   required: boolean;
   id: string;
   className: string;
@@ -30,16 +36,14 @@ const InputField = ({
 
   useEffect(() => {
     setIsValid(validateInput(passValue ? passValue : value));
-    
+
     if (data === null) {
       return;
-    }
-    else if (!!value) {
+    } else if (!!value) {
       data(value);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
@@ -51,7 +55,11 @@ const InputField = ({
 
   const handleBlur = (e: any): void => {
     setInFocus(false);
-    if (fieldType === "AMOUNT" || fieldType === "PERCENTAGE") {
+    if (
+      fieldType === "AMOUNT" ||
+      fieldType === "PERCENTAGE" ||
+      fieldType === "AMOUNTorPERCENTAGE"
+    ) {
       setValue(formatInput(value));
       if (onBlur) {
         onBlur(e);
@@ -66,10 +74,24 @@ const InputField = ({
   const validateInput = (value: string): boolean =>
     fieldType === "TEXT" ||
     !value ||
-    (required && VALIDATOR[fieldType].test(value)) ||
-    (!required && !!value && VALIDATOR[fieldType].test(value));
+    (fieldType === "AMOUNTorPERCENTAGE" &&
+      !!value &&
+      !(value.includes("$") && value.includes("%")) &&
+      VALIDATOR[fieldType].test(value)) ||
+    ((fieldType === "AMOUNT" ||
+      fieldType === "PERCENTAGE" ||
+      fieldType === "POSTCODE") &&
+      ((required && VALIDATOR[fieldType].test(value)) ||
+        (!required && !!value && VALIDATOR[fieldType].test(value))));
 
   const formatInput = (value: string): string => {
+    if (
+      (value.includes("$") && value.includes("%")) ||
+      /[a-zA-Z]/.test(value)
+    ) {
+      setIsValid(false);
+      return value;
+    }
     if (fieldType === "AMOUNT" && !value.includes("$") && value !== "") {
       return `$${value}`;
     } else if (
@@ -78,6 +100,13 @@ const InputField = ({
       value !== ""
     ) {
       return `${value}%`;
+    } else if (
+      fieldType === "AMOUNTorPERCENTAGE" &&
+      value !== "" &&
+      !value.includes("$") &&
+      !value.includes("%")
+    ) {
+      return `$${value}`;
     } else {
       return value;
     }
@@ -98,6 +127,7 @@ const InputField = ({
         onFocus={handleFocus}
         value={passValue ? passValue : value}
         name={name}
+        maxLength={fieldType === "TEXT" ? 128 : 14}
       />
       <label className={value && "in-focus"}>{label}</label>
     </div>
@@ -120,6 +150,7 @@ const VALIDATOR: { [key: string]: RegExp } = {
   POSTCODE: /^\d{5}$/,
   AMOUNT: /^\$?\d{1,7}$/,
   PERCENTAGE: /^\d{1,3}%?$/,
+  AMOUNTorPERCENTAGE: /^\$?\d{1,7}%?$/,
 };
 
 export default InputField;
