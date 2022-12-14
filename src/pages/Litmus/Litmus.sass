@@ -1,6 +1,9 @@
 @use '../../styles/variables' as vars
 @use '../../styles/mixins' as mixins
 
+.hero-text
+    line-height: 3rem
+
 .spaced-text
     color: white
     padding: 1.5rem 0
@@ -21,19 +24,22 @@
         line-height: 1.35rem
         width: 65%
 
+        p
+            padding-bottom: 4rem
+
     #budgeting-list
         width: 35%
     
     #results
-        padding-top: 2.15rem
+        padding-top: 0
+        padding-bottom: 0
         display: flex
         flex-wrap: wrap
-        flex-basis: 100%
-        justify-content: space-evenly
+        justify-content: flex-start
 
     .result-heading
-        padding-top: 1rem
-
+        padding-bottom: 0
+        
         h2
             font-size: 1.13rem
             font-weight: 400
@@ -44,23 +50,29 @@
             font-size: 1.5rem
             letter-spacing: 0
 
-        &:nth-child(1), &:nth-child(2)
-            width: 30%
+        &:nth-child(1)
+            margin-right: 2.5rem
+            margin-bottom: 2rem
+
+        &:nth-child(2)
+            margin-right: 5rem
+            margin-left: 0
+            margin-bottom: 2rem
         
         &:nth-child(3)
-            min-width: 40%
-
+            margin-bottom: 2rem
             span
                 font-size: 0.75rem
                 letter-spacing: 0.2em
 
     .synopsis
+        padding-top: 2rem
         line-height: 1.35rem
 
         h2
+            padding: 0
             font-size: 1.13rem
             font-weight: 400
-            padding-bottom: 0
 
         p
             padding-top: 1rem

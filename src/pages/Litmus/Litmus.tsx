@@ -26,7 +26,7 @@ const Litmus = (): JSX.Element => {
 
   return (
     <>
-      <h1 className="spaced-text capitalized-text">Financial Calculator</h1>
+      <h1 className="hero-text spaced-text capitalized-text">Financial Calculator</h1>
 
       <div className="primary-details-container">
         <UserDetails exportData={handleUserData} />
