@@ -1,6 +1,6 @@
 interface BudgetItem {
   fieldName: string;
-  fieldType?: string;
+  fieldType: string;
   value: string;
 };
 

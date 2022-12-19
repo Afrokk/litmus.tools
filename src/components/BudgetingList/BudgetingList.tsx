@@ -100,6 +100,7 @@ const BudgetingList = ({
       ...userBudgetFields,
       {
         fieldName: `${newFieldValue}`,
+        fieldType: "AMOUNT",
         value: "",
       },
     ]);

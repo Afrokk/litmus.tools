@@ -24,7 +24,7 @@ const UserDetails = ({
     if (exportData) {
       exportData(userDetailsData);
     }
-  });
+  }, [userDetailsData, exportData]);
 
   const handleInputChildValue = (
     childValue: string,
@@ -51,6 +51,9 @@ const UserDetails = ({
       ...userDetailsData,
       [fieldName]: nonNumericFields.includes(fieldName) ? value : numericValue,
     });
+    if (exportData) {
+      exportData(userDetailsData);
+    }
   };
 
   return (
