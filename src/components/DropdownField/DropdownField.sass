@@ -3,7 +3,8 @@
 
 .dropdown-field-component
     @include mixins.componentBaseStyles("select")
-    min-width: 25%
+    @include mixins.errorStyles("select")
+    @include mixins.successStyles("select")
 
     select
         color: white
@@ -14,9 +15,6 @@
         font-weight: 700
         letter-spacing: -0.03em
         font-size: 16px
-
-    @include mixins.errorStyles("select")
-    @include mixins.successStyles("select")
 
 .dropdown-field-component .in-focus
     transform: translate(0, 12px) scale(0.82)

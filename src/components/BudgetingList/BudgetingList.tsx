@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import InputField from "../InputField/InputField";
 import svg from "../../assets/x-lg.svg";
 import "./BudgetingList.sass";
-import { UserBudgetItems, PresetBudgetItems } from "./BudgetingList.dto";
+import { BudgetItem } from "./BudgetingList.dto";
 
 type BudgetingListProps = {
   exportData: (data: any) => void
@@ -16,14 +16,14 @@ const BudgetingList = ({
   const [newFieldLabel, setNewFieldLabel] = useState<string>("ADD MORE +");
   const [focusField, setFocusField] = useState<string>("");
   const [isDuplicateField, setIsDuplicateField] = useState<boolean>(false);
-  const [userBudgetFields, setUserBudgetFields] = useState<Array<UserBudgetItems>>([]);
-  const [budgetingData, setBudgetingData] = useState<Array<PresetBudgetItems>>([
-    { fieldName: "Student Loans (%)", fieldType: "PERCENTAGE", value: 0 },
-    { fieldName: "Rent/Mortgage", fieldType: "AMOUNT", value: 0 },
-    { fieldName: "Internet", fieldType: "AMOUNT", value: 0 },
-    { fieldName: "Electricity", fieldType: "AMOUNT", value: 0 },
-    { fieldName: "Health Insurance", fieldType: "AMOUNT", value: 0 },
-    { fieldName: "Groceries", fieldType: "AMOUNT", value: 0 },
+  const [userBudgetFields, setUserBudgetFields] = useState<Array<BudgetItem>>([]);
+  const [budgetingData, setBudgetingData] = useState<Array<BudgetItem>>([
+    { fieldName: "Student Loans ($ or %)", fieldType: "AMOUNTorPERCENTAGE", value: '0' },
+    { fieldName: "Rent/Mortgage", fieldType: "AMOUNT", value: '0' },
+    { fieldName: "Internet", fieldType: "AMOUNT", value: '0' },
+    { fieldName: "Electricity", fieldType: "AMOUNT", value: '0' },
+    { fieldName: "Health Insurance", fieldType: "AMOUNT", value: '0' },
+    { fieldName: "Groceries", fieldType: "AMOUNT", value: '0' },
   ]);
 
   const indexIDOffset = 100;
@@ -41,15 +41,13 @@ const BudgetingList = ({
     value: string,
     index: string
   ): void => {
-    value = value.replace(/\W|_/g, "");
-    let fieldValue = parseInt(value);
     fieldName === "" && budgetingData[parseInt(index) - indexIDOffset]
-      ? (budgetingData[parseInt(index) - indexIDOffset].value = fieldValue) &&
+      ? (budgetingData[parseInt(index) - indexIDOffset].value = value) &&
         setBudgetingData([...budgetingData])
       : budgetingData.push({
           fieldName: fieldName,
           fieldType: "AMOUNT",
-          value: fieldValue,
+          value: value,
         }) && setBudgetingData([...budgetingData]);
   };
 
@@ -102,6 +100,7 @@ const BudgetingList = ({
       ...userBudgetFields,
       {
         fieldName: `${newFieldValue}`,
+        fieldType: "AMOUNT",
         value: "",
       },
     ]);
