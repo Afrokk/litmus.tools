@@ -67,7 +67,8 @@ Some of the things in-plans with this project:
 - [ ] Implement back-end using Python/Flask (to get Tax rates according to states).
 
 _More to be added._
-_Progress [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
+_Progress so far (80% done!): [here](https://i.imgur.com/en1sc1l.jpg)._
+_Progress Details [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
 
 ## Created by
 
