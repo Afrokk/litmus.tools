@@ -22,7 +22,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "serve": "react-scripts start && python 3.10 manage.py runserver"
   },
   "eslintConfig": {
     "extends": [

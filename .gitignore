@@ -1,2 +1,4 @@
 **/node_modules
 .husky
+**/__pycache__
+/api/venv
