@@ -1,4 +1,5 @@
 **/node_modules
 .husky
-**/__pycache__
-/api/venv
+
+**/src/util/
+taxsim.js
