@@ -3,6 +3,7 @@ import BudgetingList from "../../components/BudgetingList/BudgetingList";
 import UserDetails from "../../components/UserDetails/UserDetails";
 import { UserData } from "../../components/UserDetails/UserDetails.dto";
 import { BudgetItem } from "../../components/BudgetingList/BudgetingList.dto";
+import taxsim from "../../util/taxsim";
 import "./Litmus.sass";
 
 interface Results {
@@ -21,6 +22,17 @@ const Litmus = (): JSX.Element => {
     Bonus: 0,
     "Relationship Status": undefined,
   });
+
+  //Testing tax data (WIP)
+  let input1 = ["taxsimid,mstat,year,pwages,state", "1,1,2023,138000,31"].join("\n")
+  let input2 = {taxsimid: 1, mstat: 2, year: 1970, ltcg: 100000, idtl: 5}
+
+  taxsim(input1).then(function(output) {
+    console.log('taxsim output', output)
+  }).catch(function(error) {
+    console.log('taxsim failed', error)
+  })
+
   const [BudgetingData, setBudgetingData] = useState<Array<BudgetItem>>([]);
 
   const [results, setResults] = useState<Results>({
@@ -40,8 +52,9 @@ const Litmus = (): JSX.Element => {
     setBudgetingData(data);
   };
 
-  const getTaxRate = (): void => {
+  const getTaxes = (): void => {
     //WIP
+
   };
 
   const calculateResults = (): void => {
