@@ -1,4 +1,4 @@
 *.json linguist-language=typescript
 *.html linguist-language=typescript
 
-/src/util/* linguist-vendored
+/src/util/* linguist-detectable=false
