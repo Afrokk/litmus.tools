@@ -63,8 +63,9 @@ Some of the things in-plans with this project:
 - [x] Test basic components.
 - [x] Build bugeting-list component.
 - [x] Build Primary Details Component. 
-- [ ] Build Descriptions inside Litmus.tsx, as per Figma spec.
-- [ ] Implement back-end using Python/Flask (to get Tax rates according to states).
+- [x] Build Descriptions inside Litmus.tsx, as per Figma spec.
+- [x] Implement tax back-end.
+- [ ] Complete tax calculator.
 
 _More to be added._
 _Progress so far (80% done!): [here](https://i.imgur.com/en1sc1l.jpg)._
