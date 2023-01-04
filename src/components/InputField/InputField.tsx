@@ -71,18 +71,28 @@ const InputField = ({
     setInFocus(true);
   };
 
-  const validateInput = (value: string): boolean =>
-    fieldType === "TEXT" ||
-    !value ||
-    (fieldType === "AMOUNTorPERCENTAGE" &&
-      !!value &&
+  const validateInput = (value: string): boolean => {
+    if (fieldType === "TEXT" || !value) {
+      return true;
+    } else if (
+      fieldType === "AMOUNTorPERCENTAGE" &&
+      value &&
       !(value.includes("$") && value.includes("%")) &&
-      VALIDATOR[fieldType].test(value)) ||
-    ((fieldType === "AMOUNT" ||
-      fieldType === "PERCENTAGE" ||
-      fieldType === "POSTCODE") &&
-      ((required && VALIDATOR[fieldType].test(value)) ||
-        (!required && !!value && VALIDATOR[fieldType].test(value))));
+      VALIDATOR[fieldType].test(value)
+    ) {
+      return true;
+    } else if (
+      (fieldType === "AMOUNT" ||
+        fieldType === "PERCENTAGE" ||
+        fieldType === "POSTCODE") &&
+      required &&
+      VALIDATOR[fieldType].test(value)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const formatInput = (value: string): string => {
     if (
@@ -127,7 +137,7 @@ const InputField = ({
         onFocus={handleFocus}
         value={passValue ? passValue : value}
         name={name}
-        maxLength={fieldType === "TEXT" ? 128 : 14}
+        maxLength={fieldType === "TEXT" ? 128 : 13}
       />
       <label className={value && "in-focus"}>{label}</label>
     </div>
@@ -148,9 +158,9 @@ InputField.defaultProps = {
 
 const VALIDATOR: { [key: string]: RegExp } = {
   POSTCODE: /^\d{5}$/,
-  AMOUNT: /^\$?\d{1,7}$/,
+  AMOUNT: /^\$?\d{1,12}$/,
   PERCENTAGE: /^\d{1,3}%?$/,
-  AMOUNTorPERCENTAGE: /^\$?\d{1,7}%?$/,
+  AMOUNTorPERCENTAGE: /^\$?\d{1,12}%?$/,
 };
 
 export default InputField;

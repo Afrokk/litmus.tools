@@ -8,12 +8,12 @@ import getStateFromPostalCode from "../../util/PostalCodeToState.mjs";
 import "./Litmus.sass";
 
 interface Results {
-  gross: number;
-  net: number;
-  taxes: number;
-  maxSavings: number;
-  breakevenAmount: number;
-  minimumExpenses: number;
+  gross: string;
+  net: string;
+  taxes: string;
+  maxSavings: string;
+  breakevenAmount: string;
+  minimumExpenses: string;
 }
 
 const Litmus = (): JSX.Element => {
@@ -27,12 +27,12 @@ const Litmus = (): JSX.Element => {
   const [BudgetingData, setBudgetingData] = useState<Array<BudgetItem>>([]);
 
   const [results, setResults] = useState<Results>({
-    gross: 0,
-    net: 0,
-    taxes: 0,
-    maxSavings: 0,
-    breakevenAmount: 0,
-    minimumExpenses: 0,
+    gross: "0",
+    net: "0",
+    taxes: "0",
+    maxSavings: "0",
+    breakevenAmount: "0",
+    minimumExpenses: "0",
   });
 
   const [isDataValid, setIsDataValid] = useState<boolean>(false);
@@ -60,25 +60,33 @@ const Litmus = (): JSX.Element => {
     } else {
       setIsDataValid(false);
     }
-    let taxInput = {
-      taxsimid: 1,
-      mstat: marriageStatus,
-      year: 2023,
-      pwages: `${userDetailsData["Annual Income"] + userDetailsData["Bonus"]}`,
-      state: await getStateFromPostalCode(userDetailsData["Postal Code"]),
-    };
 
-    if (taxInput["state"] >= 0 && taxInput["state"] < 50) {
-      setToggleError(false);
-    } else {
-      setToggleError(true);
-    }
-    if (isDataValid && !toggleError) {
-      try {
-        let output = await taxsim(taxInput);
-        setResults(calculateResults(output));
-      } catch (error) {
+    if (userDetailsData["Annual Income"]) {
+      let taxInput = {
+        taxsimid: 1,
+        mstat: marriageStatus,
+        year: 2023,
+        pwages: `${
+          userDetailsData["Annual Income"] + userDetailsData["Bonus"]
+        }`,
+        state: await getStateFromPostalCode(userDetailsData["Postal Code"]),
+      };
+
+      if (taxInput.state >= 0 && taxInput.state < 50) {
+        setToggleError(false);
+      } else {
         setToggleError(true);
+        return;
+      }
+
+      if (isDataValid && !toggleError) {
+        try {
+          let output = await taxsim(taxInput);
+          setResults(calculateResults(output));
+          setToggleError(false);
+        } catch (error) {
+          setToggleError(true);
+        }
       }
     }
   };
@@ -102,13 +110,14 @@ const Litmus = (): JSX.Element => {
       ficar: 0,
       tfica: 0,
     };
+
     let calculations: Results = {
-        gross: 0,
-        net: 0,
-        taxes: 0,
-        maxSavings: 0,
-        breakevenAmount: 0,
-        minimumExpenses: 0,
+      gross: "0",
+      net: "0",
+      taxes: "0",
+      maxSavings: "0",
+      breakevenAmount: "0",
+      minimumExpenses: "0",
     };
 
     let parseTaxData = taxData.split(/\r?\n/);
@@ -117,10 +126,29 @@ const Litmus = (): JSX.Element => {
       taxResults[key] = parseInt(value);
     });
 
-    //Accomodate Bonus
-    calculations.gross = userDetailsData["Annual Income"] + userDetailsData.Bonus;
-    calculations.net = calculations.gross - (taxResults.fiitax + taxResults.siitax); 
-    calculations.taxes = calculations.gross - calculations.net;
+    let taxFromBonus = userDetailsData.Bonus * (36.5 / 100);
+    let yearlyGrossIncome =
+      userDetailsData["Annual Income"] + (userDetailsData.Bonus - taxFromBonus);
+
+    calculations.gross = (yearlyGrossIncome / 12).toFixed(2);
+
+    calculations.net = (
+      parseFloat(calculations.gross) -
+      (taxResults.fiitax + taxResults.siitax) / 12
+    ).toFixed(2);
+
+    if (
+      calculations.gross === calculations.net ||
+      yearlyGrossIncome < 10000
+    ) {
+      calculations.taxes = "0.00";
+    } else {
+      calculations.taxes = (
+        (parseFloat(calculations.gross) -
+        parseFloat(calculations.net)) + (taxFromBonus/12)
+      ).toFixed(2);
+    }
+
     return calculations;
   };
 
@@ -130,34 +158,34 @@ const Litmus = (): JSX.Element => {
         Financial Calculator
       </h1>
 
-      <div className={`primary-details-container ${toggleError ? "post-code-error" : ""}`}>
+      <div
+        className={`primary-details-container ${
+          toggleError ? "post-code-error" : ""
+        }`}
+      >
         <UserDetails exportData={handleUserData} />
       </div>
 
       <div className="secondary-details-container">
         <div id="descriptions">
           <p>
-            Some weak ass quote intro to captivate the user. Only add the
-            monthly charges of items you can't live without. Lorem ipsum dolor
-            sit amet consectetur adipisicing elit. Aut exercitationem facere
-            molestias delectus inventore provident qui consequuntur veniam,
-            corporis architecto, fugit nesciunt odio error possimus eligendi
-            tenetur velit? Asperiores, aliquid.
+            Welcome! Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit rem sint rerum, eos ad commodi fugiat modi pariatur enim neque ipsum! Totam eos ullam maiores odio sapiente repellendus eum voluptatum.
           </p>
+          
           <div id="results" className="spaced-text capitalized-text">
             <div className="result-heading">
               <h2>Gross</h2>
-              <h3>{`$${results["gross"]}`}</h3>
+              <h3>{`$${results.gross}`}</h3>
             </div>
             <div className="result-heading">
               <h2>Net</h2>
-              <h3>{`$${results["net"]}`}</h3>
+              <h3>{`$${results.net}`}</h3>
             </div>
             <div className="result-heading">
               <h2>
                 Taxes<span>(Gross - Net)</span>
               </h2>
-              <h3>{`$${results["taxes"]}`}</h3>
+              <h3>{`$${results.taxes}`}</h3>
             </div>
           </div>
           <div className="synopsis">
