@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import BudgetingList from "../../components/BudgetingList/BudgetingList";
 import UserDetails from "../../components/UserDetails/UserDetails";
 import { UserData } from "../../components/UserDetails/UserDetails.dto";
 import { BudgetItem } from "../../components/BudgetingList/BudgetingList.dto";
 import taxsim from "../../util/taxsim";
+import getStateFromPostalCode from "../../util/PostalCodeToState.mjs";
 import "./Litmus.sass";
 
 interface Results {
-  Gross: number;
-  Net: number;
-  Taxes: number;
-  MaxSavings: number;
-  BreakevenAmount: number;
-  MinimumExpenses: number;
+  gross: number;
+  net: number;
+  taxes: number;
+  maxSavings: number;
+  breakevenAmount: number;
+  minimumExpenses: number;
 }
 
 const Litmus = (): JSX.Element => {
@@ -23,26 +24,19 @@ const Litmus = (): JSX.Element => {
     "Relationship Status": undefined,
   });
 
-  //Testing tax data (WIP)
-  let input1 = ["taxsimid,mstat,year,pwages,state", "1,1,2023,138000,31"].join("\n")
-  let input2 = {taxsimid: 1, mstat: 2, year: 1970, ltcg: 100000, idtl: 5}
-
-  taxsim(input1).then(function(output) {
-    console.log('taxsim output', output)
-  }).catch(function(error) {
-    console.log('taxsim failed', error)
-  })
-
   const [BudgetingData, setBudgetingData] = useState<Array<BudgetItem>>([]);
 
   const [results, setResults] = useState<Results>({
-    Gross: 0,
-    Net: 0,
-    Taxes: 0,
-    MaxSavings: 0,
-    BreakevenAmount: 0,
-    MinimumExpenses: 0,
+    gross: 0,
+    net: 0,
+    taxes: 0,
+    maxSavings: 0,
+    breakevenAmount: 0,
+    minimumExpenses: 0,
   });
+
+  const [isDataValid, setIsDataValid] = useState<boolean>(false);
+  const [toggleError, setToggleError] = useState<boolean>(false);
 
   const handleUserData = (data: UserData): void => {
     setUserDetailsData(data);
@@ -52,13 +46,82 @@ const Litmus = (): JSX.Element => {
     setBudgetingData(data);
   };
 
-  const getTaxes = (): void => {
-    //WIP
+  const getTaxes = async (): Promise<void> => {
+    let marriageStatus = 0;
 
+    if (userDetailsData["Relationship Status"] === "Married") {
+      marriageStatus = 2;
+      setIsDataValid(true);
+    } else if (userDetailsData["Relationship Status"] === "Single") {
+      marriageStatus = 1;
+      setIsDataValid(true);
+    } else if (userDetailsData["Relationship Status"] === undefined) {
+      setIsDataValid(true);
+    } else {
+      setIsDataValid(false);
+    }
+    let taxInput = {
+      taxsimid: 1,
+      mstat: marriageStatus,
+      year: 2023,
+      pwages: `${userDetailsData["Annual Income"] + userDetailsData["Bonus"]}`,
+      state: await getStateFromPostalCode(userDetailsData["Postal Code"]),
+    };
+
+    if (taxInput["state"] >= 0 && taxInput["state"] < 50) {
+      setToggleError(false);
+    } else {
+      setToggleError(true);
+    }
+    if (isDataValid && !toggleError) {
+      try {
+        let output = await taxsim(taxInput);
+        setResults(calculateResults(output));
+      } catch (error) {
+        setToggleError(true);
+      }
+    }
   };
 
-  const calculateResults = (): void => {
+  useMemo(() => {
+    getTaxes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDetailsData]);
+
+  const calculateResults = (taxData: string): Results => {
     //WIP
+    let taxResults: { [key: string]: number } = {
+      taxismid: 0,
+      year: 0,
+      state: 0,
+      fiitax: 0,
+      siitax: 0,
+      fica: 0,
+      frate: 0,
+      srate: 0,
+      ficar: 0,
+      tfica: 0,
+    };
+    let calculations: Results = {
+        gross: 0,
+        net: 0,
+        taxes: 0,
+        maxSavings: 0,
+        breakevenAmount: 0,
+        minimumExpenses: 0,
+    };
+
+    let parseTaxData = taxData.split(/\r?\n/);
+    parseTaxData[1].split(",").forEach((value, index) => {
+      let key = Object.keys(taxResults)[index];
+      taxResults[key] = parseInt(value);
+    });
+
+    //Accomodate Bonus
+    calculations.gross = userDetailsData["Annual Income"] + userDetailsData.Bonus;
+    calculations.net = calculations.gross - (taxResults.fiitax + taxResults.siitax); 
+    calculations.taxes = calculations.gross - calculations.net;
+    return calculations;
   };
 
   return (
@@ -67,7 +130,7 @@ const Litmus = (): JSX.Element => {
         Financial Calculator
       </h1>
 
-      <div className="primary-details-container">
+      <div className={`primary-details-container ${toggleError ? "post-code-error" : ""}`}>
         <UserDetails exportData={handleUserData} />
       </div>
 
@@ -84,17 +147,17 @@ const Litmus = (): JSX.Element => {
           <div id="results" className="spaced-text capitalized-text">
             <div className="result-heading">
               <h2>Gross</h2>
-              <h3>{`$${11966.11}`}</h3>
+              <h3>{`$${results["gross"]}`}</h3>
             </div>
             <div className="result-heading">
               <h2>Net</h2>
-              <h3>{`$${9581.72}`}</h3>
+              <h3>{`$${results["net"]}`}</h3>
             </div>
             <div className="result-heading">
               <h2>
                 Taxes<span>(Gross - Net)</span>
               </h2>
-              <h3>{`$${2891.56}`}</h3>
+              <h3>{`$${results["taxes"]}`}</h3>
             </div>
           </div>
           <div className="synopsis">

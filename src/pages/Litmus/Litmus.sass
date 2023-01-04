@@ -10,15 +10,20 @@
     color: white
     padding: 1.5rem 0
     letter-spacing: 0.56em
+    
+.post-code-error
+    &::after
+        content: "Error: Entered Postal Code is not a valid/supported US Postal Code."
+        color: vars.$error
+        position: relative
+        top: 1rem
 
-.primary-details-container
-    overflow-x: hidden
 
 .capitalized-text
     font-weight: 400
     font-size: 2rem
     text-transform: uppercase
-
+        
 .secondary-details-container
     padding-top: 2rem
     display: flex
