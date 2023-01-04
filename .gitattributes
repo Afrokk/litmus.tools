@@ -2,3 +2,4 @@
 *.html linguist-language=typescript
 
 /src/util/taxsim.js linguist-detectable=false
+/src/util/*.mjs linguist-language=javascript
