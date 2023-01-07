@@ -1,6 +1,6 @@
 overrides: [
   {
-    files: ['./src/util/*.js', '*.ts', '*.tsx'],
+    files: ['*.js', '*.ts', '*.tsx'],
     rules: {
       'no-undef': 'off',
     },

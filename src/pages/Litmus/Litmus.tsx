@@ -27,12 +27,12 @@ const Litmus = (): JSX.Element => {
   const [BudgetingData, setBudgetingData] = useState<Array<BudgetItem>>([]);
 
   const [results, setResults] = useState<Results>({
-    gross: "0",
-    net: "0",
-    taxes: "0",
-    maxSavings: "0",
-    breakevenAmount: "0",
-    minimumExpenses: "0",
+    gross: "0.00",
+    net: "0.00",
+    taxes: "0.00",
+    maxSavings: "0.00",
+    breakevenAmount: "0.00",
+    minimumExpenses: "0.00",
   });
 
   const [isDataValid, setIsDataValid] = useState<boolean>(false);
@@ -79,7 +79,12 @@ const Litmus = (): JSX.Element => {
         return;
       }
 
-      if (isDataValid && !toggleError) {
+      if (
+        isDataValid &&
+        !toggleError &&
+        userDetailsData["Bonus"] >= 0 &&
+        userDetailsData["Annual Income"]
+      ) {
         try {
           let output = await taxsim(taxInput);
           setResults(calculateResults(output));
@@ -94,10 +99,9 @@ const Litmus = (): JSX.Element => {
   useMemo(() => {
     getTaxes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userDetailsData]);
+  }, [userDetailsData, BudgetingData]);
 
   const calculateResults = (taxData: string): Results => {
-    //WIP
     let taxResults: { [key: string]: number } = {
       taxismid: 0,
       year: 0,
@@ -137,21 +141,90 @@ const Litmus = (): JSX.Element => {
       (taxResults.fiitax + taxResults.siitax) / 12
     ).toFixed(2);
 
-    if (
-      calculations.gross === calculations.net ||
-      yearlyGrossIncome < 10000
-    ) {
+    if (calculations.gross === calculations.net || yearlyGrossIncome < 10000) {
       calculations.taxes = "0.00";
     } else {
       calculations.taxes = (
-        (parseFloat(calculations.gross) -
-        parseFloat(calculations.net)) + (taxFromBonus/12)
+        parseFloat(calculations.gross) -
+        parseFloat(calculations.net) +
+        taxFromBonus / 12
       ).toFixed(2);
     }
 
+    let totalExpenses = 0;
+
+    BudgetingData.forEach((entry) => {
+      if (entry.value === "") {
+        totalExpenses += 0;
+      } else if (entry.fieldType === "AMOUNT") {
+        let numericValue = parseInt(entry.value.replace(/\W|_/g, ""));
+        if (Number.isNaN(numericValue)) {
+          numericValue = 0;
+        } else if (numericValue > 0) {
+          totalExpenses += numericValue;
+        }
+      } else if (entry.fieldType === "AMOUNTorPERCENTAGE") {
+        if (entry.value.includes("%")) {
+          let numericValue = parseInt(entry.value.replace(/\W|_/g, ""));
+          numericValue =
+            (userDetailsData["Annual Income"] / 12) *
+            (parseFloat(entry.value) / 100);
+            
+          if (Number.isNaN(numericValue)) {
+            numericValue = 0;
+          } else if (numericValue > 0) {
+            totalExpenses += numericValue;
+          }
+        } else if (entry.value.includes("$")) {
+          let numericValue = parseInt(entry.value.replace(/\W|_/g, ""));
+          if (Number.isNaN(numericValue)) {
+            numericValue = 0;
+          } else if (numericValue > 0) {
+            totalExpenses += numericValue;
+          }
+        }
+      } else if (entry.fieldType === "PERCENTAGE") {
+        let numericValue = parseInt(entry.value.replace(/\W|_/g, ""));
+        numericValue =
+          parseFloat(calculations.gross) * (parseFloat(entry.value) / 100);
+        if (Number.isNaN(numericValue)) {
+          numericValue = 0;
+        } else if (numericValue > 0) {
+          totalExpenses += numericValue;
+        }
+      }
+    });
+    calculations.breakevenAmount = totalExpenses.toFixed(2);
+    calculations.maxSavings = (
+      yearlyGrossIncome / 12 -
+      parseFloat(calculations.breakevenAmount)
+    ).toFixed(2);
+
+    if (parseFloat(calculations.maxSavings) < 0) {
+      calculations.maxSavings = "0.00";
+    }
+
+    let minimumExpenses = 0;
+
+    BudgetingData.forEach((entry) => {
+      if (
+        entry.value.includes("%") &&
+        entry.fieldName.startsWith("Student Loans")
+      ) {
+        minimumExpenses += 0;
+      } else {
+        let numericValue = parseFloat(entry.value.replace(/\W|_/g, ""));
+        if (Number.isNaN(numericValue)) {
+          numericValue = 0;
+        } else if (numericValue > 0) {
+          minimumExpenses += numericValue;
+        }
+      }
+    });
+
+    calculations.minimumExpenses = minimumExpenses.toFixed(2);
     return calculations;
   };
-
   return (
     <>
       <h1 className="hero-text spaced-text capitalized-text">
@@ -169,9 +242,12 @@ const Litmus = (): JSX.Element => {
       <div className="secondary-details-container">
         <div id="descriptions">
           <p>
-            Welcome! Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit rem sint rerum, eos ad commodi fugiat modi pariatur enim neque ipsum! Totam eos ullam maiores odio sapiente repellendus eum voluptatum.
+            Welcome! Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Odit rem sint rerum, eos ad commodi fugiat modi pariatur enim neque
+            ipsum! Totam eos ullam maiores odio sapiente repellendus eum
+            voluptatum.
           </p>
-          
+
           <div id="results" className="spaced-text capitalized-text">
             <div className="result-heading">
               <h2>Gross</h2>
@@ -191,12 +267,13 @@ const Litmus = (): JSX.Element => {
           <div className="synopsis">
             <h2 className="spaced-text capitalized-text">Synopsis</h2>
             <p>
-              You can save at max <span>{`$${5681.11}`}/month</span> when you
-              have a job and need atleast <span>{`$${3631.11}`}/month</span> to
-              breakeven each month. <br />
+              You can save at max <span>{`$${results.maxSavings}`}/month</span>{" "}
+              when you have a job and need atleast{" "}
+              <span>{`$${results.breakevenAmount}`}/month</span> to breakeven
+              each month. <br />
               <br />
-              If you lose your job, you will need atleast{" "}
-              <span>{`$${1831.11}`}/month</span>. <br /> <br />
+              If you lose your job, you will need atleast
+              <span> {`$${results.minimumExpenses}`}/month</span>. <br /> <br />
               <span>Note:</span> This tool may not be super accurate.
             </p>
           </div>
