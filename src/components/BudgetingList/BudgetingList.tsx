@@ -77,8 +77,7 @@ const BudgetingList = ({
 
   useEffect(() => {
     exportData(budgetingData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [budgetingData]);
+  }, [budgetingData, exportData]);
 
   const handleFocus = (): void => {
     setNewFieldLabel("Type New Field and Press Enter:");

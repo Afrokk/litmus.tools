@@ -1,4 +1,4 @@
-import csvFilePath from './zip_code_database.csv';
+import csvFilePath from './zip_state_map.csv';
 
 const getStateFromPostalCode = async (postalCode) => {
 	if (postalCode === "" || postalCode.length < 5) {
