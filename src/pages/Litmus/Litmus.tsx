@@ -6,6 +6,8 @@ import { BudgetItem } from "../../components/BudgetingList/BudgetingList.dto";
 import taxsim from "../../util/taxsim";
 import getStateFromPostalCode from "../../util/PostalCodeToState.mjs";
 import "./Litmus.sass";
+import HelpModal from "../../components/Modals/HelpModal";
+import AboutModal from "../../components/Modals/AboutModal";
 
 interface Results {
   gross: string;
@@ -37,6 +39,8 @@ const Litmus = (): JSX.Element => {
 
   const [isDataValid, setIsDataValid] = useState<boolean>(false);
   const [toggleError, setToggleError] = useState<boolean>(false);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
 
   const handleUserData = (data: UserData): void => {
     setUserDetailsData(data);
@@ -86,8 +90,8 @@ const Litmus = (): JSX.Element => {
         userDetailsData["Annual Income"]
       ) {
         try {
-          let output = await taxsim(taxInput);
-          setResults(calculateResults(output));
+          let taxOutput = await taxsim(taxInput);
+          setResults(calculateResults(taxOutput));
           setToggleError(false);
         } catch (error) {
           setToggleError(true);
@@ -169,7 +173,7 @@ const Litmus = (): JSX.Element => {
           numericValue =
             (userDetailsData["Annual Income"] / 12) *
             (parseFloat(entry.value) / 100);
-            
+
           if (Number.isNaN(numericValue)) {
             numericValue = 0;
           } else if (numericValue > 0) {
@@ -281,6 +285,17 @@ const Litmus = (): JSX.Element => {
         <div id="budgeting-list">
           <BudgetingList exportData={handleBudgetingData} />
         </div>
+      </div>
+      <div className="footer">
+        <ul>
+          <li><button onClick={() => setIsHelpModalOpen(true)}>Help</button></li>
+          {isHelpModalOpen && <HelpModal setIsOpen={setIsHelpModalOpen} />}
+          <li><button onClick={() => setIsAboutModalOpen(true)}>About</button></li>
+          {isAboutModalOpen && <AboutModal setIsOpen={setIsAboutModalOpen} />}
+        </ul>
+        <p>
+          &copy; Copyright 2023 litmus.tools
+        </p>
       </div>
     </>
   );
