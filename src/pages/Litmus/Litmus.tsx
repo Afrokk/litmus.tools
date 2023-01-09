@@ -246,10 +246,7 @@ const Litmus = (): JSX.Element => {
       <div className="secondary-details-container">
         <div id="descriptions">
           <p>
-            Welcome! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Odit rem sint rerum, eos ad commodi fugiat modi pariatur enim neque
-            ipsum! Totam eos ullam maiores odio sapiente repellendus eum
-            voluptatum.
+            Welcome! <br /><br /> Litmus.tools' Financial Calculator makes it extremely easy and straight forward to calculate your income & taxes, get insights, and plan out your budget - all in one place. Simply enter your details and non-discretionary expenses, and it'll do the rest.
           </p>
 
           <div id="results" className="spaced-text capitalized-text">
