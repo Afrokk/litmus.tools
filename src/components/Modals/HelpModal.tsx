@@ -11,7 +11,7 @@ const HelpModal = ({ setIsOpen }: HelpModalProps): JSX.Element => {
       <div className="modal-container" onClick={() => setIsOpen(false)} />
         <div className="centered">
           <div className="modal-content">
-            <div className="modalHeader" onBlur={() => setIsOpen(false)}>
+            <div className="modalHeader">
               <div className="heading">
                 <p>Help</p>
                 <ul>

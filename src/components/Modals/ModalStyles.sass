@@ -1,5 +1,7 @@
 @use '../../styles/variables' as vars
 
+.modal-container
+    width: 30vw
 .centered 
     position: fixed
     top: 50%
@@ -22,7 +24,9 @@
     z-index: 10
     box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04)
 
-.heading 
+.heading
+    display: flex
+    flex-direction: column 
     margin: 0
     padding: 1.5rem
     color: white
@@ -39,12 +43,18 @@
         font-family: vars.$primary-font
         text-transform: none
         letter-spacing: 0
+
+        a:hover
+            color: vars.$primary-color
+
     
     li:last-child
         text-transform: uppercase
         letter-spacing: 0.2em
+        margin-top: auto
         padding-top: 14rem
         font-size: 1rem
+        flex-grow: 1
 
 .modal-content
     padding: 10px
