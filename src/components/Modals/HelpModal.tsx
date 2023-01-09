@@ -18,8 +18,9 @@ const HelpModal = ({ setIsOpen }: HelpModalProps): JSX.Element => {
                   <li> <strong>Current Tax Year:</strong> 2023.</li>
                   <li>Only enter expenses you can't live without.</li>
                   <li>Gross, Net and all other calculations are <strong>per month</strong>.</li>
-                  <li>A base tax rate is applied if the Postal Code is not entered, or it is from a not-supported state.</li>
+                  <li>A base tax rate is applied if the Postal Code is not entered, or it is from an unsupported state.</li>
                   <li>Supported states are <strong>all 51 US states</strong>. US Army Postal Codes are not supported.</li>
+                  <li> The Student Loans field accepts both dollar ($) and percentage(%) amounts. If your student loans are a percentage (%), you can enter it like "x%". By default, Student Loans are treated as a $ amount.</li>
                   <li>litmus.tools v1.0</li>
                 </ul>
               </div>
