@@ -1,4 +1,5 @@
 import "./ModalStyles.sass";
+import svg from "../../assets/close-icon.svg";
 
 type AboutModalProps = {
   setIsOpen: (state: boolean) => void;
@@ -11,7 +12,7 @@ const AboutModal = ({ setIsOpen }: AboutModalProps): JSX.Element => {
       <div className="content">
         <p>OOOGA OOGA</p>
         <div className="closeBtn">
-          <button onClick={() => setIsOpen(false)}>X</button>
+          <img src={svg} alt="" onClick={() => setIsOpen(false)}/>
         </div>
       </div>
     </>
