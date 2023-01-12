@@ -1,0 +1,88 @@
+@use '../../styles/variables' as vars
+@use '../../styles/mixins' as mixins
+
+.modal-container
+    width: 30vw
+
+.centered 
+    position: fixed
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+
+.modal 
+    width: 45rem
+    height: 35rem
+    background: #0F0F0F
+    color: white
+    z-index: 10
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04)
+    @include mixins.fadeIn
+
+.modalHeader
+    width: 45rem
+    height: 35rem
+    background: #0F0F0F
+    color: white
+    z-index: 10
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04)
+    @include mixins.fadeIn
+
+.heading
+    display: flex
+    flex-direction: column 
+    margin: 0
+    padding: 1.5rem
+    color: white
+    font-weight: 500
+    font-size: 18px
+    text-align: center
+
+    p
+        font-size: 1.5rem
+        font-weight: 700
+        padding-bottom: 2.5rem
+
+    li
+        font-family: vars.$primary-font
+        text-transform: none
+        letter-spacing: 0
+
+        a:hover
+            color: vars.$primary-color
+
+    
+    li:last-child
+        text-transform: uppercase
+        letter-spacing: 0.2em
+        margin-top: auto
+        padding-top: 10rem
+        font-size: 1rem
+        flex-grow: 1
+
+.modal-content
+    padding: 10px
+    font-size: 14px
+    color: white
+    text-align: center
+
+.closeBtn
+    cursor: pointer
+    border: none
+    transition: all 0.25s ease
+    position: absolute
+    right: 0.8rem
+    top: 0.8rem
+
+.closeBtn:hover 
+    transform: scale(1.1)
+
+#version-tag
+    text-transform: none
+    letter-spacing: 0
+    padding-top: 16rem
+    font-size: 1rem
+
+    span
+        text-transform: uppercase
+        letter-spacing: 0.2em
