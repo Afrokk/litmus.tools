@@ -1,13 +1,13 @@
 import { useState, useMemo } from "react";
-import BudgetingList from "../../components/BudgetingList/BudgetingList";
-import UserDetails from "../../components/UserDetails/UserDetails";
 import { UserData } from "../../components/UserDetails/UserDetails.dto";
 import { BudgetItem } from "../../components/BudgetingList/BudgetingList.dto";
+import BudgetingList from "../../components/BudgetingList/BudgetingList";
+import UserDetails from "../../components/UserDetails/UserDetails";
 import taxsim from "../../util/taxsim";
 import getStateFromPostalCode from "../../util/PostalCodeToState.mjs";
-import "./Litmus.sass";
 import HelpModal from "../../components/Modals/HelpModal";
 import AboutModal from "../../components/Modals/AboutModal";
+import "./Litmus.sass";
 
 interface Results {
   gross: string;
@@ -229,6 +229,7 @@ const Litmus = (): JSX.Element => {
     calculations.minimumExpenses = minimumExpenses.toFixed(2);
     return calculations;
   };
+
   return (
     <>
       <h1 className="hero-text spaced-text capitalized-text">
@@ -246,7 +247,11 @@ const Litmus = (): JSX.Element => {
       <div className="secondary-details-container">
         <div id="descriptions">
           <p>
-            Welcome! <br /><br /> Litmus.tools' Financial Calculator makes it extremely easy and straight forward to calculate your income & taxes, get insights, and plan out your budget - all in one place. Simply enter your details and non-discretionary expenses, and it'll do the rest.
+            Welcome! <br />
+            <br /> Litmus.tools' Financial Calculator makes it extremely easy
+            and straight forward to calculate your income & taxes, get insights,
+            and plan out your budget - all in one place. Simply enter your
+            details and non-discretionary expenses, and it'll do the rest.
           </p>
 
           <div id="results" className="spaced-text capitalized-text">
@@ -285,14 +290,16 @@ const Litmus = (): JSX.Element => {
       </div>
       <div className="footer">
         <ul>
-          <li><button onClick={() => setIsHelpModalOpen(true)}>Help</button></li>
+          <li>
+            <button onClick={() => setIsHelpModalOpen(true)}>Help</button>
+          </li>
           {isHelpModalOpen && <HelpModal setIsOpen={setIsHelpModalOpen} />}
-          <li><button onClick={() => setIsAboutModalOpen(true)}>About</button></li>
+          <li>
+            <button onClick={() => setIsAboutModalOpen(true)}>About</button>
+          </li>
           {isAboutModalOpen && <AboutModal setIsOpen={setIsAboutModalOpen} />}
         </ul>
-        <p>
-          &copy; Copyright 2023 litmus.tools
-        </p>
+        <p>&copy;Copyright 2023 litmus.tools</p>
       </div>
     </>
   );

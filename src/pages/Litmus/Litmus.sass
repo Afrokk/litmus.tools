@@ -120,3 +120,178 @@
     
     button:hover
         color: vars.$primary-color
+
+@media screen and (max-width: 705px)
+    .hero-text
+        text-align: center
+
+    .secondary-details-container
+        flex-direction: column-reverse
+        align-items: center
+        padding-top: 0
+
+        #descriptions
+            width: 100%
+            padding-right: 0
+
+        .budgeting-list-component
+            margin-bottom: 0
+
+        #budgeting-list
+            width: 100%
+            padding-top: 2rem
+            padding-bottom: 0
+            margin-bottom: 2rem
+
+        .result-heading
+            margin-right: 0
+            margin-bottom: 2rem
+
+            &:nth-child(2)
+                margin-left: 0
+
+            &:nth-child(3)
+                margin-bottom: 2rem
+
+            h2
+                font-size: 1.13rem
+                font-weight: 400
+            
+            h3
+                padding-top: 1rem
+                font-weight: 700
+                font-size: 1.5rem
+                letter-spacing: 0
+
+            span
+                font-size: 0.75rem
+                letter-spacing: 0.2em
+
+    .synopsis
+        padding-top: 2rem
+        line-height: 1.35rem
+
+        h2
+            padding: 0
+            font-size: 1.13rem
+            font-weight: 400
+
+        p
+            padding-top: 1rem
+            font-weight: 400
+
+        span
+            font-weight: 700
+    
+    .modal-container
+        width: 15vw
+
+    .modal 
+        width: 30rem
+        height: 25rem
+        background: #0F0F0F
+        color: white
+        z-index: 10
+        box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04)
+
+    .modalHeader
+        width: 30rem
+        height: 25rem
+        background: #0F0F0F
+        color: white
+        z-index: 10
+        box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04)
+    
+    .heading
+        font-size: 12px
+
+        li:last-child
+            padding-top: 4.5rem
+            font-size: 0.8rem
+
+    #version-tag
+        padding-top: 9rem
+        font-size: 0.8rem
+
+@media screen and (max-width: 540px)
+    .body
+        font-size: 14px 
+    
+    .hero-text
+        font-size: 18px
+        text-align: center
+
+    .user-details-component
+        .input-field-component
+            width: 95%
+            padding-top: 0
+            margin-top: 19.2px
+
+            label
+                font-size: 14px
+        
+        .input-field-component:nth-child(2)
+            margin-top: 0px
+            padding-top: 0px
+        
+        .input-field-component:nth-child(3)
+            margin-top: 0px
+            padding-top: 0px
+        
+        .dropdown-field-component
+            margin-top: 0px
+            padding-top: 0px
+            width: 95%
+
+            label
+                font-size: 14px
+    
+    .budgeting-list-component
+        li
+            padding: 0
+
+        .input-field-component
+            label
+                font-size: 14px
+
+    .footer
+        padding-bottom: 2rem
+
+        button
+            cursor: pointer
+            text-decoration: none
+            background-color: transparent
+            color: white
+            text-transform: uppercase
+            letter-spacing: 0.2em
+            font-size: 1rem
+
+    .modal-container
+        width: 15vw
+
+    .modal 
+        width: 18rem
+        height: 35rem
+        background: #0F0F0F
+        color: white
+        z-index: 10
+        box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04)
+
+    .modalHeader
+        width: 18rem
+        height: 35rem
+        background: #0F0F0F
+        color: white
+        z-index: 10
+        box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04)
+    
+    .heading
+        font-size: 12px
+
+        li:last-child
+            padding-top: 8.5rem
+            font-size: 0.8rem
+
+    #version-tag
+        padding-top: 17rem
+        font-size: 0.8rem
