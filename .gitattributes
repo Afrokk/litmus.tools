@@ -1,5 +1,5 @@
 *.json linguist-language=typescript
-*.html linguist-language=typescript
+*.html linguist-language=javascript
 
 /src/util/taxsim.js linguist-detectable=false
 /src/util/*.mjs linguist-language=javascript
