@@ -90,7 +90,8 @@ const BudgetingList = ({
   };
 
   const addField = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code !== "Enter") {return;}
+    e.preventDefault();
+    if (e.key !== "Enter") {return;}
     if (budgetingData.some((item) => item.fieldName === newFieldValue) || newFieldValue === "") {
       setIsDuplicateField(true);
       return;
@@ -183,6 +184,7 @@ const BudgetingList = ({
               onBlur={handleBlur}
               onKeyUp={addField}
               value={newFieldValue}
+              type="text"
             />
             <label className={newFieldValue && "in-focus"}>
               {newFieldLabel}
