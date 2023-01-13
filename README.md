@@ -65,10 +65,10 @@ Some of the things in-plans with this project:
 - [x] Build Primary Details Component. 
 - [x] Build Descriptions inside Litmus.tsx, as per Figma spec.
 - [x] Implement tax back-end.
-- [ ] Complete tax calculator.
+- [x] Complete tax calculator.
+- [ ] Deploy.
 
-_More to be added._
-_Progress so far (80% done!): [here](https://i.imgur.com/en1sc1l.jpg)._
+_Project Completed: [here](https://i.imgur.com/en1sc1l.jpg)._
 _Progress Details [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
 
 ## Created by
