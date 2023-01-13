@@ -68,7 +68,8 @@ Some of the things in-plans with this project:
 - [x] Complete tax calculator.
 - [ ] Deploy.
 
-_Project Completed. _Progress Details [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
+_Project Completed. 
+_Progress Details [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
 
 ## Created by
 
