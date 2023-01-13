@@ -1524,7 +1524,7 @@ var loadTAXSIM = (() => {
               "Cross-Origin-Embedder-Policy": "require-corp",
             }),
           };
-          return fetch("https://litmus.tools/taxsim.wasm", options).then(
+          return fetch("https://www.litmus.tools/taxsim.wasm", options).then(
             function (response) {
               var result = WebAssembly.instantiateStreaming(response, info);
               return result.then(receiveInstantiationResult, function (reason) {
