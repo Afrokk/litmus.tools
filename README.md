@@ -9,7 +9,7 @@
   <p align="center">
     Money matters. Track your finances and save. 
     <br />
-    <a href="https://litmus-tools.vercel.app/"><strong>Check it out LIVE! »</strong></a>
+    <a href="https://www.litmus.tools/"><strong>Check it out LIVE! »</strong></a>
     <br />
   </p>
 </div>
@@ -65,7 +65,7 @@ Initial design of the app. Simple, minimal and sleek.
 - [x] Deploy.
 
 _Project Completed._ 
-_Check it out LIVE [here](https://litmus-tools.vercel.app/)._
+_Check it out LIVE [here](https://www.litmus.tools/)._
 
 ## Created by
 
