@@ -18,6 +18,15 @@
 
 Litmus.tools is a full-stack web-app that makes it extremely easy and straight forward to calculate your income, taxes (based on zip code), gather insights, and plan out your budget - all in one place. All you need to do is enter your income and expenses into the calculator and it will do the rest!
 
+## Features
+* Effortlessly calculate your gross & net income as well as your taxes based in your location.
+* Uses up-to-date data from official US state departments, ensuring accuracy of the calculations. 
+* No reliance on third-party APIs. 
+* Uses Web Assembly for calculations, this makes it extremely fast.
+* All components built from the ground-up, very minimal dependencies. 
+* Fully optimized for mobile screen sizes. 
+
+
 ## Built With
 
 ### Development
