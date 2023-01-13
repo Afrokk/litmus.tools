@@ -1,3 +1,4 @@
+/*eslint-disable */
 var loadTAXSIM = (() => {
   var _scriptDir =
     typeof document !== "undefined" && document.currentScript
@@ -167,12 +168,6 @@ var loadTAXSIM = (() => {
         return "[Emscripten Module object]";
       };
     } else if (ENVIRONMENT_IS_SHELL) {
-      if (typeof read != "undefined") {
-        read_ = function shell_read(f) {
-          return read(f);
-        };
-      }
-
       readBinary = function readBinary(f) {
         let data;
         if (typeof readbuffer === "function") {
@@ -5206,3 +5201,5 @@ else if (typeof define === "function" && define["amd"])
     return taxsim;
   });
 else if (typeof exports === "object") exports["taxsim"] = taxsim;
+export default taxsim;
+/*eslint-disable */
