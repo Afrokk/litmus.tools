@@ -9,7 +9,7 @@
   <p align="center">
     Money matters. Track your finances and save. 
     <br />
-    <a href="https://github.com/Afrokk/litmus.tools"><strong>Work in Progress. »</strong></a>
+    <a href="https://litmus-tools.vercel.app/"><strong>Check it out LIVE! »</strong></a>
     <br />
   </p>
 </div>
