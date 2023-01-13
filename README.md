@@ -16,10 +16,9 @@
 
 ## About The Project
 
-Litmus.tools is an upcoming full-stack web-app that makes it extremely easy and straight forward to calculate your income, taxes (based on location), gather insights, and plan out your budget - all in one place. All you need to do is enter your income and expenses into the calculator and it will do the rest!
+Litmus.tools is a full-stack web-app that makes it extremely easy and straight forward to calculate your income, taxes (based on zip code), gather insights, and plan out your budget - all in one place. All you need to do is enter your income and expenses into the calculator and it will do the rest!
 
 ## Built With
-Work in progress. Currently using:
 
 ### Development
 * [![React][React.com]][React-url]
@@ -27,8 +26,7 @@ Work in progress. Currently using:
 * [![Yarn][Yarn.com]][Yarn-url]
 * [![SASS][SASS.com]][SASS-url]
 * [![JavaScript][JavaScript.com]][JavaScript-url]
-
-_More to be added._
+* [![Vercel][Vercel.com]][Vercel-url]
 
 ### Design/Prototyping
 * [![Figma][Figma.com]][Figma-url]
@@ -56,8 +54,6 @@ Initial design of the app. Simple, minimal and sleek.
 
 
 ## Roadmap
-Some of the things in-plans with this project:
-
 - [x] Create individual React components from scratch.
 - [x] Handle component-level validation.
 - [x] Test basic components.
@@ -66,10 +62,10 @@ Some of the things in-plans with this project:
 - [x] Build Descriptions inside Litmus.tsx, as per Figma spec.
 - [x] Implement tax back-end.
 - [x] Complete tax calculator.
-- [ ] Deploy.
+- [x] Deploy.
 
-Project Completed. 
-_Progress Details [here](https://github.com/Afrokk/litmus.tools/pulls?q=is%3Apr+is%3Aclosed)._
+_Project Completed._ 
+_Check it out LIVE [here](https://litmus-tools.vercel.app/)._
 
 ## Created by
 
@@ -100,3 +96,5 @@ Project Link: [https://github.com/Afrokk/litmus.tools](https://github.com/Afrokk
 [Git-url]: https://git-scm.com/
 [GitHub.com]: https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white
 [GitHub-url]: https://github.com/
+[Vercel.com]: https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white
+[Vercel-url]: https://Vercel.com/
