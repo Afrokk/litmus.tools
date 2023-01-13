@@ -20,21 +20,22 @@ Litmus.tools is a full-stack web-app that makes it extremely easy and straight f
 
 ## Features
 * Effortlessly calculate your gross & net income as well as your taxes based in your location.
+* Add expenses to dynamically calculate your monthly expenditures and "what ifs". 
 * Uses up-to-date data from official US state departments, ensuring accuracy of the calculations. 
 * No reliance on third-party APIs. 
-* Uses Web Assembly for calculations, this makes it extremely fast.
-* All components built from the ground-up, very minimal dependencies. 
-* Fully optimized for mobile screen sizes. 
-
+* Uses Web Assembly for calculations, making this extremely fast.
+* All components & assets built from the ground-up, with very minimal dependencies. 
+* Fully responsive & optimized for all screen sizes.
 
 ## Built With
 
 ### Development
 * [![React][React.com]][React-url]
 * [![TypeScript][TypeScript.com]][TypeScript-url]
+* [![JavaScript][JavaScript.com]][JavaScript-url]
+* [![WASM][WASM.com]][WASM-url]
 * [![Yarn][Yarn.com]][Yarn-url]
 * [![SASS][SASS.com]][SASS-url]
-* [![JavaScript][JavaScript.com]][JavaScript-url]
 * [![Vercel][Vercel.com]][Vercel-url]
 
 ### Design/Prototyping
@@ -47,20 +48,30 @@ Litmus.tools is a full-stack web-app that makes it extremely easy and straight f
 * [![GitHub][GitHub.com]][GitHub-url]
 
 ## Design
+<details>
+  <summary>Design Progress</summary>
+  <h4 align="center"> Initial Design Prototype</h4>
+  <p align="center">
+    <img src="images/FigmaPrototype1.jpg">
+  </p>
+  <h4 align="center"> Final (Live) Design </h4>
+  <p align="center">
+    <img src="images/FinalDesign.jpg">
+  </p>
+</details>
+
+### Design Prototype
 Initial design of the app. Simple, minimal and sleek.
 
 <p align="center">
     <img src="images/FigmaPrototype1.jpg">
 </p>
 
-<p align="center">
-    <img src="images/FigmaMockupPSD2.jpg">
-</p>
+### Final (Live) Design
 
 <p align="center">
-    <img src="images/FigmaMockupPSD1.jpg">
+    <img src="images/FigmaPrototype1.jpg">
 </p>
-
 
 ## Roadmap
 - [x] Create individual React components from scratch.
@@ -107,3 +118,5 @@ Project Link: [https://github.com/Afrokk/litmus.tools](https://github.com/Afrokk
 [GitHub-url]: https://github.com/
 [Vercel.com]: https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white
 [Vercel-url]: https://Vercel.com/
+[WASM.com]: https://img.shields.io/badge/WebAssembly-654FF0?style=for-the-badge&logo=WebAssembly&logoColor=white
+[WASM-url]: https://webassembly.org/
