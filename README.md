@@ -9,7 +9,7 @@
   <p align="center">
     Money matters. Track your finances and save. 
     <br />
-    <a href="https://www.litmus.tools/"><strong>Check it out LIVE! »</strong></a>
+    <a href="https://www.litmus.tools/" target="_blank"><strong>Check it out LIVE! »</strong></a>
     <br />
   </p>
 </div>
@@ -23,9 +23,10 @@ Litmus.tools is a full-stack web-app that makes it extremely easy and straight f
 * Add expenses to dynamically calculate your monthly expenditures and "what ifs". 
 * Uses up-to-date data from official US state departments, ensuring accuracy of the calculations. 
 * No reliance on third-party APIs. 
-* Uses Web Assembly for calculations, making this extremely fast.
+* Uses Web Assembly for extremely quick calculations.
 * All components & assets built from the ground-up, with very minimal dependencies. 
 * Fully responsive & optimized for all screen sizes.
+* In-house validation of all inputs and data.
 
 ## Built With
 
@@ -88,7 +89,7 @@ _Check it out LIVE [here](https://www.litmus.tools/)._
 
 Usman Abdul Jabbar - [@usmangta](https://www.instagram.com/usmangta/) - [LinkedIn](https://www.linkedin.com/in/usman-abdul-jabbar/) - hi@usmanjabbar.com
 
-Afrasiyab (Afrokk) Khan - [@afrokk_](https://www.instagram.com/afrokk_/) - [afrokk.design](https://afrokk.design/) - [afrokk.dev](https://afrokk.dev/) - [LinkedIn](https://www.linkedin.com/in/afrasiyab-k/) - afrasiyabkhan379@gmail.com
+Afrasiyab (Afrokk) Khan - [@afrokk_](https://www.instagram.com/afrokk_/) - [afrokk.design](https://afrokk.design/) - [afrokk.dev](https://afrokk.dev/) - [LinkedIn](https://www.linkedin.com/in/afrasiyab-k/) - hi@afrokk.dev
 
 Project Link: [https://github.com/Afrokk/litmus.tools](https://github.com/Afrokk/litmus.tools)
 
