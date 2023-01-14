@@ -67,7 +67,7 @@ Litmus.tools is a full-stack web-app that makes it extremely easy and straight f
 
 ### Mobile
   <p align="center">
-    <img src="images/litmus-Mobile.jpg">
+    <img src="images/litmus-mobile.jpg">
   </p>
 
 ## Roadmap
