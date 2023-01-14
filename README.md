@@ -60,18 +60,15 @@ Litmus.tools is a full-stack web-app that makes it extremely easy and straight f
   </p>
 </details>
 
-### Design Prototype
-Initial design of the app. Simple, minimal and sleek.
+### Desktop
+  <p align="center">
+    <img src="images/litmus-desktop.jpg">
+  </p>
 
-<p align="center">
-    <img src="images/FigmaPrototype1.jpg">
-</p>
-
-### Final (Live) Design
-
-<p align="center">
-    <img src="images/FigmaPrototype1.jpg">
-</p>
+### Mobile
+  <p align="center">
+    <img src="images/litmus-Mobile.jpg">
+  </p>
 
 ## Roadmap
 - [x] Create individual React components from scratch.
