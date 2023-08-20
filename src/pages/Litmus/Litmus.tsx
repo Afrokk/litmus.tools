@@ -233,7 +233,7 @@ const Litmus = (): JSX.Element => {
   return (
     <>
       <h1 className="hero-text spaced-text capitalized-text">
-        Financial Calculator
+        litmus
       </h1>
 
       <div
@@ -248,7 +248,7 @@ const Litmus = (): JSX.Element => {
         <div id="descriptions">
           <p>
             Welcome! <br />
-            <br /> Litmus.tools' Financial Calculator makes it extremely easy
+            <br /> Litmus is a Financial Calculator that makes it extremely easy
             and straight forward to calculate your income & taxes, get insights,
             and plan out your budget - all in one place. Simply enter your
             details and non-discretionary expenses, and it'll do the rest.
