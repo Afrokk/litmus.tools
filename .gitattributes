@@ -2,5 +2,5 @@
 *.html linguist-language=javascript
 *.json linguist-detectable=true
 
-/src/util/taxsim.js linguist-detectable=false
-/src/util/*.mjs linguist-language=javascript
+/src/utils/taxsim.js linguist-detectable=false
+/src/utils/*.mjs linguist-language=javascript
