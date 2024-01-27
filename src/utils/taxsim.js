@@ -67,6 +67,12 @@ var loadTAXSIM = (() => {
 
     // `/` should be present at the end if `scriptDirectory` is not empty
     var scriptDirectory = "";
+    function locateFile(path) {
+      if (Module["locateFile"]) {
+        return Module["locateFile"](path, scriptDirectory);
+      }
+      return scriptDirectory + path;
+    }
 
     // Hooks that are implemented differently in different runtime environments.
     var read_, readAsync, readBinary, setWindowTitle;
@@ -168,6 +174,12 @@ var loadTAXSIM = (() => {
         return "[Emscripten Module object]";
       };
     } else if (ENVIRONMENT_IS_SHELL) {
+      if (typeof read != "undefined") {
+        read_ = function shell_read(f) {
+          return read(f);
+        };
+      }
+
       readBinary = function readBinary(f) {
         let data;
         if (typeof readbuffer === "function") {
@@ -560,9 +572,9 @@ var loadTAXSIM = (() => {
     // In traditional runtime, setValue() and getValue() are always available (although their use is highly discouraged due to perf penalties)
 
     /** @param {number} ptr
-							@param {number} value
-							@param {string} type
-							@param {number|boolean=} noSafe */
+    @param {number} value
+    @param {string} type
+    @param {number|boolean=} noSafe */
     function setValue(ptr, value, type = "i8", noSafe) {
       if (type.charAt(type.length - 1) === "*") type = "i32";
       switch (type) {
@@ -610,8 +622,8 @@ var loadTAXSIM = (() => {
     }
 
     /** @param {number} ptr
-							@param {string} type
-							@param {number|boolean=} noSafe */
+    @param {string} type
+    @param {number|boolean=} noSafe */
     function getValue(ptr, type = "i8", noSafe) {
       if (type.charAt(type.length - 1) === "*") type = "i32";
       switch (type) {
@@ -671,9 +683,9 @@ var loadTAXSIM = (() => {
 
     // C calling interface.
     /** @param {string|null=} returnType
-							@param {Array=} argTypes
-							@param {Arguments|Array=} args
-							@param {Object=} opts */
+    @param {Array=} argTypes
+    @param {Arguments|Array=} args
+    @param {Object=} opts */
     function ccall(ident, returnType, argTypes, args, opts) {
       // For fast lookup of conversion functions
       var toC = {
@@ -716,7 +728,6 @@ var loadTAXSIM = (() => {
         }
       }
       var ret = func.apply(null, cArgs);
-
       function onDone(ret) {
         if (stack !== 0) stackRestore(stack);
         return convertReturnValue(ret);
@@ -727,8 +738,8 @@ var loadTAXSIM = (() => {
     }
 
     /** @param {string=} returnType
-							@param {Array=} argTypes
-							@param {Object=} opts */
+    @param {Array=} argTypes
+    @param {Object=} opts */
     function cwrap(ident, returnType, argTypes, opts) {
       argTypes = argTypes || [];
       // When the function takes numbers and returns a number, we can just return
@@ -1134,7 +1145,7 @@ var loadTAXSIM = (() => {
     // function stringToUTF8Array() instead, which takes in a maximum length that can be used
     // to be secure from out of bounds writes.
     /** @deprecated
-							@param {boolean=} dontAddNull */
+    @param {boolean=} dontAddNull */
     function writeStringToMemory(string, buffer, dontAddNull) {
       warnOnce(
         "writeStringToMemory is deprecated and should not be called! Use stringToUTF8() instead!"
@@ -1408,7 +1419,10 @@ var loadTAXSIM = (() => {
 
     // end include: URIUtils.js
     var wasmBinaryFile;
-    wasmBinaryFile = "http://localhost:3000/taxsim.wasm";
+    wasmBinaryFile = "./taxsim.wasm";
+    if (!isDataURI(wasmBinaryFile)) {
+      wasmBinaryFile = locateFile(wasmBinaryFile);
+    }
 
     function getBinary(file) {
       try {
@@ -1433,9 +1447,7 @@ var loadTAXSIM = (() => {
       // So use fetch if it is available and the url is not a file, otherwise fall back to XHR.
       if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
         if (typeof fetch === "function") {
-          return fetch(wasmBinaryFile, {
-            credentials: "same-origin",
-          })
+          return fetch(wasmBinaryFile, { credentials: "same-origin" })
             .then(function (response) {
               if (!response["ok"]) {
                 throw (
@@ -1524,18 +1536,16 @@ var loadTAXSIM = (() => {
               "Cross-Origin-Embedder-Policy": "require-corp",
             }),
           };
-          return fetch("https://www.litmus.tools/taxsim.wasm", options).then(
-            function (response) {
-              var result = WebAssembly.instantiateStreaming(response, info);
-              return result.then(receiveInstantiationResult, function (reason) {
-                // We expect the most common failure cause to be a bad MIME type for the binary,
-                // in which case falling back to ArrayBuffer instantiation should work.
-                err("wasm streaming compile failed: " + reason);
-                err("falling back to ArrayBuffer instantiation");
-                return instantiateArrayBuffer(receiveInstantiationResult);
-              });
-            }
-          );
+          return fetch("/taxsim.wasm", options).then(function (response) {
+            var result = WebAssembly.instantiateStreaming(response, info);
+            return result.then(receiveInstantiationResult, function (reason) {
+              // We expect the most common failure cause to be a bad MIME type for the binary,
+              // in which case falling back to ArrayBuffer instantiation should work.
+              err("wasm streaming compile failed: " + reason);
+              err("falling back to ArrayBuffer instantiation");
+              return instantiateArrayBuffer(receiveInstantiationResult);
+            });
+          });
         } else {
           return instantiateArrayBuffer(receiveInstantiationResult);
         }
@@ -1593,7 +1603,6 @@ var loadTAXSIM = (() => {
       stackRestore(stack);
       return ret;
     }
-
     function demangle(func) {
       return func;
     }
@@ -1607,7 +1616,6 @@ var loadTAXSIM = (() => {
     }
 
     var wasmTableMirror = [];
-
     function getWasmTableEntry(funcPtr) {
       var func = wasmTableMirror[funcPtr];
       if (!func) {
@@ -1680,14 +1688,12 @@ var loadTAXSIM = (() => {
     } else if (typeof dateNow !== "undefined") {
       _emscripten_get_now = dateNow;
     } else _emscripten_get_now = () => performance.now();
-
     var _emscripten_get_now_is_monotonic = true;
 
     function setErrNo(value) {
       HEAP32[___errno_location() >> 2] = value;
       return value;
     }
-
     function _clock_gettime(clk_id, tp) {
       // int clock_gettime(clockid_t clk_id, struct timespec *tp);
       var now;
@@ -1706,7 +1712,6 @@ var loadTAXSIM = (() => {
       HEAP32[(tp + 4) >> 2] = ((now % 1000) * 1000 * 1000) | 0; // nanoseconds
       return 0;
     }
-
     function ___clock_gettime(a0, a1) {
       return _clock_gettime(a0, a1);
     }
@@ -1850,7 +1855,6 @@ var loadTAXSIM = (() => {
       relative: function (from, to) {
         from = PATH_FS.resolve(from).substr(1);
         to = PATH_FS.resolve(to).substr(1);
-
         function trim(arr) {
           var start = 0;
           for (; start < arr.length; start++) {
@@ -1906,11 +1910,7 @@ var loadTAXSIM = (() => {
         // }
       },
       register: function (dev, ops) {
-        TTY.ttys[dev] = {
-          input: [],
-          output: [],
-          ops: ops,
-        };
+        TTY.ttys[dev] = { input: [], output: [], ops: ops };
         FS.registerDevice(dev, TTY.stream_ops);
       },
       stream_ops: {
@@ -2063,7 +2063,6 @@ var loadTAXSIM = (() => {
     function alignMemory(size, alignment) {
       return Math.ceil(size / alignment) * alignment;
     }
-
     function mmapAlloc(size) {
       abort();
     }
@@ -2415,10 +2414,7 @@ var loadTAXSIM = (() => {
             }
             HEAP8.set(contents, ptr);
           }
-          return {
-            ptr: ptr,
-            allocated: allocated,
-          };
+          return { ptr: ptr, allocated: allocated };
         },
         msync: function (stream, buffer, offset, length, mmapFlags) {
           if (!FS.isFile(stream.node.mode)) {
@@ -2482,11 +2478,7 @@ var loadTAXSIM = (() => {
       lookupPath: (path, opts = {}) => {
         path = PATH_FS.resolve(FS.cwd(), path);
 
-        if (!path)
-          return {
-            path: "",
-            node: null,
-          };
+        if (!path) return { path: "", node: null };
 
         var defaults = {
           follow_mount: true,
@@ -2551,10 +2543,7 @@ var loadTAXSIM = (() => {
           }
         }
 
-        return {
-          path: current_path,
-          node: current,
-        };
+        return { path: current_path, node: current };
       },
       getPath: (node) => {
         var path;
@@ -2650,14 +2639,7 @@ var loadTAXSIM = (() => {
       isSocket: (mode) => {
         return (mode & 49152) === 49152;
       },
-      flagModes: {
-        r: 0,
-        "r+": 2,
-        w: 577,
-        "w+": 578,
-        a: 1089,
-        "a+": 1090,
-      },
+      flagModes: { r: 0, "r+": 2, w: 577, "w+": 578, a: 1089, "a+": 1090 },
       modeStringToFlags: (str) => {
         var flags = FS.flagModes[str];
         if (typeof flags === "undefined") {
@@ -2812,9 +2794,7 @@ var loadTAXSIM = (() => {
       minor: (dev) => dev & 0xff,
       makedev: (ma, mi) => (ma << 8) | mi,
       registerDevice: (dev, ops) => {
-        FS.devices[dev] = {
-          stream_ops: ops,
-        };
+        FS.devices[dev] = { stream_ops: ops };
       },
       getDevice: (dev) => FS.devices[dev],
       getMounts: (mount) => {
@@ -2884,9 +2864,7 @@ var loadTAXSIM = (() => {
         if (root && FS.root) {
           throw new FS.ErrnoError(10);
         } else if (!root && !pseudo) {
-          var lookup = FS.lookupPath(mountpoint, {
-            follow_mount: false,
-          });
+          var lookup = FS.lookupPath(mountpoint, { follow_mount: false });
 
           mountpoint = lookup.path; // use the absolute path
           node = lookup.node;
@@ -2927,9 +2905,7 @@ var loadTAXSIM = (() => {
         return mountRoot;
       },
       unmount: (mountpoint) => {
-        var lookup = FS.lookupPath(mountpoint, {
-          follow_mount: false,
-        });
+        var lookup = FS.lookupPath(mountpoint, { follow_mount: false });
 
         if (!FS.isMountpoint(lookup.node)) {
           throw new FS.ErrnoError(28);
@@ -2965,9 +2941,7 @@ var loadTAXSIM = (() => {
         return parent.node_ops.lookup(parent, name);
       },
       mknod: (path, mode, dev) => {
-        var lookup = FS.lookupPath(path, {
-          parent: true,
-        });
+        var lookup = FS.lookupPath(path, { parent: true });
         var parent = lookup.node;
         var name = PATH.basename(path);
         if (!name || name === "." || name === "..") {
@@ -3019,9 +2993,7 @@ var loadTAXSIM = (() => {
         if (!PATH_FS.resolve(oldpath)) {
           throw new FS.ErrnoError(44);
         }
-        var lookup = FS.lookupPath(newpath, {
-          parent: true,
-        });
+        var lookup = FS.lookupPath(newpath, { parent: true });
         var parent = lookup.node;
         if (!parent) {
           throw new FS.ErrnoError(44);
@@ -3045,13 +3017,9 @@ var loadTAXSIM = (() => {
         var lookup, old_dir, new_dir;
 
         // let the errors from non existant directories percolate up
-        lookup = FS.lookupPath(old_path, {
-          parent: true,
-        });
+        lookup = FS.lookupPath(old_path, { parent: true });
         old_dir = lookup.node;
-        lookup = FS.lookupPath(new_path, {
-          parent: true,
-        });
+        lookup = FS.lookupPath(new_path, { parent: true });
         new_dir = lookup.node;
 
         if (!old_dir || !new_dir) throw new FS.ErrnoError(44);
@@ -3126,9 +3094,7 @@ var loadTAXSIM = (() => {
         }
       },
       rmdir: (path) => {
-        var lookup = FS.lookupPath(path, {
-          parent: true,
-        });
+        var lookup = FS.lookupPath(path, { parent: true });
         var parent = lookup.node;
         var name = PATH.basename(path);
         var node = FS.lookupNode(parent, name);
@@ -3146,9 +3112,7 @@ var loadTAXSIM = (() => {
         FS.destroyNode(node);
       },
       readdir: (path) => {
-        var lookup = FS.lookupPath(path, {
-          follow: true,
-        });
+        var lookup = FS.lookupPath(path, { follow: true });
         var node = lookup.node;
         if (!node.node_ops.readdir) {
           throw new FS.ErrnoError(54);
@@ -3156,9 +3120,7 @@ var loadTAXSIM = (() => {
         return node.node_ops.readdir(node);
       },
       unlink: (path) => {
-        var lookup = FS.lookupPath(path, {
-          parent: true,
-        });
+        var lookup = FS.lookupPath(path, { parent: true });
         var parent = lookup.node;
         if (!parent) {
           throw new FS.ErrnoError(44);
@@ -3196,9 +3158,7 @@ var loadTAXSIM = (() => {
         );
       },
       stat: (path, dontFollow) => {
-        var lookup = FS.lookupPath(path, {
-          follow: !dontFollow,
-        });
+        var lookup = FS.lookupPath(path, { follow: !dontFollow });
         var node = lookup.node;
         if (!node) {
           throw new FS.ErrnoError(44);
@@ -3214,9 +3174,7 @@ var loadTAXSIM = (() => {
       chmod: (path, mode, dontFollow) => {
         var node;
         if (typeof path === "string") {
-          var lookup = FS.lookupPath(path, {
-            follow: !dontFollow,
-          });
+          var lookup = FS.lookupPath(path, { follow: !dontFollow });
           node = lookup.node;
         } else {
           node = path;
@@ -3242,9 +3200,7 @@ var loadTAXSIM = (() => {
       chown: (path, uid, gid, dontFollow) => {
         var node;
         if (typeof path === "string") {
-          var lookup = FS.lookupPath(path, {
-            follow: !dontFollow,
-          });
+          var lookup = FS.lookupPath(path, { follow: !dontFollow });
           node = lookup.node;
         } else {
           node = path;
@@ -3273,9 +3229,7 @@ var loadTAXSIM = (() => {
         }
         var node;
         if (typeof path === "string") {
-          var lookup = FS.lookupPath(path, {
-            follow: true,
-          });
+          var lookup = FS.lookupPath(path, { follow: true });
           node = lookup.node;
         } else {
           node = path;
@@ -3309,9 +3263,7 @@ var loadTAXSIM = (() => {
         FS.truncate(stream.node, len);
       },
       utime: (path, atime, mtime) => {
-        var lookup = FS.lookupPath(path, {
-          follow: true,
-        });
+        var lookup = FS.lookupPath(path, { follow: true });
         var node = lookup.node;
         node.node_ops.setattr(node, {
           timestamp: Math.max(atime, mtime),
@@ -3615,9 +3567,7 @@ var loadTAXSIM = (() => {
       },
       cwd: () => FS.currentPath,
       chdir: (path) => {
-        var lookup = FS.lookupPath(path, {
-          follow: true,
-        });
+        var lookup = FS.lookupPath(path, { follow: true });
         if (lookup.node === null) {
           throw new FS.ErrnoError(44);
         }
@@ -3682,12 +3632,8 @@ var loadTAXSIM = (() => {
                   if (!stream) throw new FS.ErrnoError(8);
                   var ret = {
                     parent: null,
-                    mount: {
-                      mountpoint: "fake",
-                    },
-                    node_ops: {
-                      readlink: () => stream.path,
-                    },
+                    mount: { mountpoint: "fake" },
+                    node_ops: { readlink: () => stream.path },
                   };
                   ret.parent = ret; // make it look like a simple root node
                   return ret;
@@ -3805,9 +3751,7 @@ var loadTAXSIM = (() => {
       analyzePath: (path, dontResolveLastLink) => {
         // operate from within the context of the symlink's target
         try {
-          var lookup = FS.lookupPath(path, {
-            follow: !dontResolveLastLink,
-          });
+          var lookup = FS.lookupPath(path, { follow: !dontResolveLastLink });
           path = lookup.path;
         } catch (e) {}
         var ret = {
@@ -3822,16 +3766,12 @@ var loadTAXSIM = (() => {
           parentObject: null,
         };
         try {
-          var lookup = FS.lookupPath(path, {
-            parent: true,
-          });
+          var lookup = FS.lookupPath(path, { parent: true });
           ret.parentExists = true;
           ret.parentPath = lookup.path;
           ret.parentObject = lookup.node;
           ret.name = PATH.basename(path);
-          lookup = FS.lookupPath(path, {
-            follow: !dontResolveLastLink,
-          });
+          lookup = FS.lookupPath(path, { follow: !dontResolveLastLink });
           ret.exists = true;
           ret.path = lookup.path;
           ret.object = lookup.node;
@@ -4106,15 +4046,9 @@ var loadTAXSIM = (() => {
             },
           });
 
-          var properties = {
-            isDevice: false,
-            contents: lazyArray,
-          };
+          var properties = { isDevice: false, contents: lazyArray };
         } else {
-          var properties = {
-            isDevice: false,
-            url: url,
-          };
+          var properties = { isDevice: false, url: url };
         }
 
         var node = FS.createFile(parent, name, properties, canRead, canWrite);
@@ -4252,7 +4186,6 @@ var loadTAXSIM = (() => {
           var ok = 0,
             fail = 0,
             total = paths.length;
-
           function finish() {
             if (fail == 0) onload();
             else onerror();
@@ -4297,7 +4230,6 @@ var loadTAXSIM = (() => {
           var ok = 0,
             fail = 0,
             total = paths.length;
-
           function finish() {
             if (fail == 0) onload();
             else onerror();
@@ -4468,9 +4400,7 @@ var loadTAXSIM = (() => {
           // need a valid mode
           return -28;
         }
-        var lookup = FS.lookupPath(path, {
-          follow: true,
-        });
+        var lookup = FS.lookupPath(path, { follow: true });
         var node = lookup.node;
         if (!node) {
           return -44;
@@ -4534,7 +4464,6 @@ var loadTAXSIM = (() => {
         return low;
       },
     };
-
     function ___syscall_dup(fd) {
       try {
         var old = SYSCALLS.getStreamFromFD(fd);
@@ -4645,7 +4574,6 @@ var loadTAXSIM = (() => {
     function abortOnCannotGrowMemory(requestedSize) {
       abort("OOM");
     }
-
     function _emscripten_resize_heap(requestedSize) {
       var oldSize = HEAPU8.length;
       requestedSize = requestedSize >>> 0;
@@ -4657,7 +4585,6 @@ var loadTAXSIM = (() => {
     function getExecutableName() {
       return thisProgram || "./this.program";
     }
-
     function getEnvStrings() {
       if (!getEnvStrings.strings) {
         // Default values.
@@ -4694,7 +4621,6 @@ var loadTAXSIM = (() => {
       }
       return getEnvStrings.strings;
     }
-
     function _environ_get(__environ, environ_buf) {
       var bufSize = 0;
       getEnvStrings().forEach(function (string, i) {
@@ -5173,14 +5099,12 @@ async function taxsim(input, opts) {
 
   if (data !== undefined) {
     let i = 0;
-
     function stdin() {
       if (i < data.length) {
         return data.charCodeAt(i++);
       }
       return null;
     }
-
     function stdouterr(c) {
       out += String.fromCharCode(c);
     }
@@ -5190,7 +5114,9 @@ async function taxsim(input, opts) {
   }
 
   let exitCode = em.callMain();
+  
   if (exitCode !== undefined && exitCode != 0) throw out;
+
   return out;
 }
 
@@ -5201,5 +5127,5 @@ else if (typeof define === "function" && define["amd"])
     return taxsim;
   });
 else if (typeof exports === "object") exports["taxsim"] = taxsim;
+
 export default taxsim;
-/*eslint-disable */

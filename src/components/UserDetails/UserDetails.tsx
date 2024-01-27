@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import InputField from "../InputField/InputField";
-import DropdownField from "../DropdownField/DropdownField";
 import { UserData } from "./UserDetails.dto";
+import InputField from "Components/InputField/InputField";
+import DropdownField from "Components/DropdownField/DropdownField";
 import "./UserDetails.sass";
 
 type UserDetailsProps = {

@@ -1,5 +1,5 @@
 import "./ModalStyles.sass";
-import svg from "../../assets/close-icon.svg";
+import svg from "Assets/close-icon.svg";
 
 type HelpModalProps = {
   setIsOpen: (state: boolean) => void;
@@ -17,7 +17,7 @@ const HelpModal = ({ setIsOpen }: HelpModalProps): JSX.Element => {
               <ul>
                 <li>
                   {" "}
-                  <strong>Developed with &#128153; by</strong>
+                  <strong>Developed & Maintained with &#128153; by</strong>
                 </li>
                 <li>
                   Afrasiyab (Afrokk) Khan -{" "}
@@ -78,7 +78,7 @@ const HelpModal = ({ setIsOpen }: HelpModalProps): JSX.Element => {
                   >
                     US NBER
                   </a>
-                  <br /><br /> <span> litmus.tools v1.0</span>
+                  <br /><br /> <span> litmus.tools v1.1</span>
                 </li>
               </ul>
             </div>

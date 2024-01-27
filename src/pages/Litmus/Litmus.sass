@@ -10,7 +10,7 @@
     color: white
     padding: 1.5rem 0
     letter-spacing: 0.56em
-    
+
 .post-code-error
     &::after
         content: "Error: Entered Postal Code is not a valid/supported US Postal Code."
@@ -39,9 +39,12 @@
         p
             padding-bottom: 4rem
 
+        p span
+            font-weight: bold
+
     #budgeting-list
         width: 35%
-    
+
     #results
         padding-top: 0
         padding-bottom: 0
@@ -49,13 +52,16 @@
         flex-wrap: wrap
         justify-content: flex-start
 
+    .data
+        font-size: 1.1rem
+
     .result-heading
         padding-bottom: 0
-        
+
         h2
             font-size: 1.13rem
             font-weight: 400
-        
+
         h3
             padding-top: 1rem
             font-weight: 700
@@ -70,7 +76,7 @@
             margin-right: 5rem
             margin-left: 0
             margin-bottom: 2rem
-        
+
         &:nth-child(3)
             margin-bottom: 2rem
             span
@@ -107,19 +113,31 @@
         color: white
 
     ul li 
-            padding-bottom: 1rem
+        padding-bottom: 1rem
 
     button
-        cursor: pointer
-        text-decoration: none
-        background-color: transparent
-        color: white
+        display: inline-block
+        padding: 10px 20px
+        font-size: 16px
+        font-weight: 300
         text-transform: uppercase
         letter-spacing: 0.2em
-        font-size: 1rem
-    
-    button:hover
-        color: vars.$primary-color
+        color: #ffffff
+        background-color: #0F0F0F
+        border: none
+        border-radius: 4px
+        cursor: pointer
+        transition: background-color 0.3s ease, color 0.3s ease
+
+        &:hover,
+        &:focus
+            color: #000000
+            background-color: #ffffff
+            outline: none
+
+        &:active
+            background-color: #777777
+            color: #ffffff
 
 @media screen and (max-width: 705px)
     .hero-text
@@ -156,7 +174,7 @@
             h2
                 font-size: 1.13rem
                 font-weight: 400
-            
+
             h3
                 padding-top: 1rem
                 font-weight: 700
@@ -182,11 +200,11 @@
 
         span
             font-weight: 700
-    
+
     .modal-container
         width: 15vw
 
-    .modal 
+    .modal
         width: 30rem
         height: 25rem
         background: #0F0F0F
@@ -201,7 +219,7 @@
         color: white
         z-index: 10
         box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04)
-    
+
     .heading
         font-size: 12px
 
@@ -215,8 +233,8 @@
 
 @media screen and (max-width: 540px)
     .body
-        font-size: 14px 
-    
+        font-size: 14px
+
     .hero-text
         font-size: 18px
         text-align: center
@@ -229,15 +247,15 @@
 
             label
                 font-size: 14px
-        
+
         .input-field-component:nth-child(2)
             margin-top: 0px
             padding-top: 0px
-        
+
         .input-field-component:nth-child(3)
             margin-top: 0px
             padding-top: 0px
-        
+
         .dropdown-field-component
             margin-top: 0px
             padding-top: 0px
@@ -245,7 +263,7 @@
 
             label
                 font-size: 14px
-    
+
     .budgeting-list-component
         li
             padding: 0
@@ -258,18 +276,13 @@
         padding-bottom: 2rem
 
         button
-            cursor: pointer
-            text-decoration: none
-            background-color: transparent
-            color: white
-            text-transform: uppercase
-            letter-spacing: 0.2em
-            font-size: 1rem
+            font-size: 12px
+            
 
     .modal-container
         width: 15vw
 
-    .modal 
+    .modal
         width: 18rem
         height: 35rem
         background: #0F0F0F
@@ -284,7 +297,7 @@
         color: white
         z-index: 10
         box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04)
-    
+
     .heading
         font-size: 12px
 

@@ -1,12 +1,12 @@
 import { useState, useMemo } from "react";
-import { UserData } from "../../components/UserDetails/UserDetails.dto";
-import { BudgetItem } from "../../components/BudgetingList/BudgetingList.dto";
-import BudgetingList from "../../components/BudgetingList/BudgetingList";
-import UserDetails from "../../components/UserDetails/UserDetails";
-import taxsim from "../../util/taxsim";
-import getStateFromPostalCode from "../../util/PostalCodeToState.mjs";
-import HelpModal from "../../components/Modals/HelpModal";
-import AboutModal from "../../components/Modals/AboutModal";
+import { UserData } from "Components/UserDetails/UserDetails.dto";
+import { BudgetItem } from "Components/BudgetingList/BudgetingList.dto";
+import BudgetingList from "Components/BudgetingList/BudgetingList";
+import UserDetails from "Components/UserDetails/UserDetails";
+import taxsim from "Utilities/taxsim.js";
+import getStateFromPostalCode from "Utilities/PostalCodeToState.js";
+import HelpModal from "Components/Modals/HelpModal";
+import AboutModal from "Components/Modals/AboutModal";
 import "./Litmus.sass";
 
 interface Results {
@@ -232,9 +232,7 @@ const Litmus = (): JSX.Element => {
 
   return (
     <>
-      <h1 className="hero-text spaced-text capitalized-text">
-        litmus
-      </h1>
+      <h1 className="hero-text spaced-text capitalized-text">litmus</h1>
 
       <div
         className={`primary-details-container ${
@@ -248,10 +246,14 @@ const Litmus = (): JSX.Element => {
         <div id="descriptions">
           <p>
             Welcome! <br />
-            <br /> Litmus is a Financial Calculator that makes it extremely easy
-            and straight forward to calculate your income & taxes, get insights,
-            and plan out your budget - all in one place. Simply enter your
-            details and non-discretionary expenses, and it'll do the rest.
+            <br /> <span>Litmus</span> is a Financial tool that makes it
+            extremely easy and straight forward to calculate your income &
+            taxes, get insights, and plan out your budget - all in one place.{" "}
+            <br />
+            <br /> Simply enter your details and <span>
+              non-discretionary
+            </span>{" "}
+            expenses, and it'll do the rest.
           </p>
 
           <div id="results" className="spaced-text capitalized-text">
@@ -273,14 +275,23 @@ const Litmus = (): JSX.Element => {
           <div className="synopsis">
             <h2 className="spaced-text capitalized-text">Synopsis</h2>
             <p>
-              You can save at max <span>{`$${results.maxSavings}`}/month</span>{" "}
-              when you have a job and need atleast{" "}
-              <span>{`$${results.breakevenAmount}`}/month</span> to breakeven
-              each month. <br />
+              You can save at max{" "}
+              <span className="data">{`$${results.maxSavings}`}/month</span>{" "}
+              when you have a job and need at least{" "}
+              <span className="data">
+                {`$${results.breakevenAmount}`}/month
+              </span>{" "}
+              to breakeven each month. <br />
               <br />
-              If you lose your job, you will need atleast
-              <span> {`$${results.minimumExpenses}`}/month</span>. <br /> <br />
-              <span>Note:</span> This tool may not be super accurate.
+              If you lose your job, you will need at least
+              <span className="data">
+                {" "}
+                {`$${results.minimumExpenses}`}/month
+              </span>
+              . <br /> <br />
+              <span>Note:</span> This tool provides an approximate tax estimate
+              and may not account for all specific tax details. Please consult a
+              tax professional for precise calculations.
             </p>
           </div>
         </div>
@@ -299,7 +310,7 @@ const Litmus = (): JSX.Element => {
           </li>
           {isAboutModalOpen && <AboutModal setIsOpen={setIsAboutModalOpen} />}
         </ul>
-        <p>&copy;Copyright 2023 litmus.tools</p>
+        <p>&copy;Copyright 2023-2024 litmus.tools</p>
       </div>
     </>
   );

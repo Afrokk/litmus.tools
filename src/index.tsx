@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 
-import Litmus from "./pages/Litmus/Litmus";
-import BodyContainer from "./components/BodyContainer/BodyContainer";
+import Litmus from "Pages/Litmus/Litmus";
+import BodyContainer from "Components/BodyContainer/BodyContainer";
 import "./styles/globalStyles.sass";
 
 const root = ReactDOM.createRoot(

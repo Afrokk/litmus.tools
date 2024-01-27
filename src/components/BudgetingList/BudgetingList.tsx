@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import InputField from "../InputField/InputField";
-import svg from "../../assets/x-lg.svg";
-import "./BudgetingList.sass";
 import { BudgetItem } from "./BudgetingList.dto";
+import InputField from "Components/InputField/InputField";
+import svg from "Assets/x-lg.svg";
+import "./BudgetingList.sass";
 
 type BudgetingListProps = {
   exportData: (data: any) => void

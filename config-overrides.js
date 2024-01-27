@@ -1,4 +1,6 @@
 const webpack = require("webpack");
+const path = require("path");
+
 module.exports = function override(config) {
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
@@ -19,5 +21,13 @@ module.exports = function override(config) {
       Buffer: ["buffer", "Buffer"],
     }),
   ]);
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    Pages: path.resolve(__dirname, "src/pages/"),
+    Utilities: path.resolve(__dirname, "src/utils/"),
+    Components: path.resolve(__dirname, "src/components/"),
+    Styles: path.resolve(__dirname, "src/styles/"),
+    Assets: path.resolve(__dirname, "src/assets/"),
+  };
   return config;
 };
