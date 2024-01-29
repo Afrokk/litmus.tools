@@ -43,7 +43,7 @@ const HelpModal = ({ setIsOpen }: HelpModalProps): JSX.Element => {
                       percentage (%), you can enter it like "x%". By default,
                       Student Loans are treated as a $ amount.
                     </li>
-                    <li>litmus.tools v1.0</li>
+                    <li>litmus.tools v1.1</li>
                   </ul>
                 </div>
               </div>
